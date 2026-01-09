@@ -1,0 +1,7 @@
+{
+  "name": "DZtryFitting1",
+  "description": "A luxury virtual try-on platform for Algerian traditional heritage wear using AI.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
