@@ -238,43 +238,6 @@ export const GARMENTS: Garment[] = [
     sizes: ['36', '38', '40']
   },
 
-  // --- TARGUIS (Sahara/Tuareg) ---
-  {
-    id: 't1',
-    name: 'Indigo Sahara Targuis',
-    category: 'Targuis',
-    region: 'Golden Needle',
-    image: 'images/garments/Indigo Sahara Targuis.png',
-    price: '75,000 DZD',
-    description: 'Deep indigo nomadic robe with the iconic Tagelmust style embroidery.',
-    material: 'Hand-dyed Indigo Cotton',
-    colors: ['#1e3a8a', '#172554'],
-    sizes: ['Free Size']
-  },
-  {
-    id: 't2',
-    name: 'Desert Nomad Robe',
-    category: 'Targuis',
-    region: 'Golden Needle',
-    image: 'images/garments/Desert Nomad Robe.png',
-    price: '65,000 DZD',
-    description: 'Breathable linen robe in sand tones, perfect for the Saharan heat with minimalist hand-stitching.',
-    material: 'Premium Sahara Linen',
-    colors: ['#d1d5db', '#f3f4f6'],
-    sizes: ['Free Size']
-  },
-  {
-    id: 't3',
-    name: 'Leather-Trimmed Targuis',
-    category: 'Targuis',
-    region: 'Golden Needle',
-    image: 'images/garments/Leather-Trimmed Targuis.png',
-    price: '90,000 DZD',
-    description: 'Unique Targuis dress featuring authentic leather accents and silver Berber coins.',
-    material: 'Cotton & Goat Leather',
-    colors: ['#78350f', '#451a03'],
-    sizes: ['38', '40', '42']
-  },
 
   // --- DZIRI (Algiers Modern) ---
   {
