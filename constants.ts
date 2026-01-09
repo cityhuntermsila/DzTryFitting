@@ -407,19 +407,7 @@ export const GALLERY_ITEMS: GalleryItem[] = GARMENTS
   });
 
 export const ALL_GARMENTS: Garment[] = [
-  ...GARMENTS,
-  ...GALLERY_ITEMS.map(item => ({
-    id: item.id,
-    name: item.title,
-    category: item.category,
-    region: item.partnerName,
-    image: item.image,
-    price: item.price,
-    description: item.description,
-    material: 'Haute Couture',
-    colors: item.colors,
-    sizes: item.sizes,
-  }))
+  ...GARMENTS
 ];
 
 export const I18N: Translation = {

@@ -38,11 +38,14 @@ const Gallery: React.FC<GalleryProps> = ({ lang, onTryOn }) => {
     }
 
     // Convert GalleryItem to Garment for Studio
+    // Extract original ID by removing 'prod-gallery-' prefix
+    const originalId = selectedItem.id.replace('prod-gallery-', '');
+
     const garment: Garment = {
-      id: selectedItem.id,
-      name: selectedItem.title,
+      id: originalId,
+      name: selectedItem.title.split(' - ')[0], // Get original name
       category: selectedItem.category,
-      region: 'Algeria', // Default or extracted
+      region: selectedItem.partnerName,
       image: activeImage || selectedItem.image,
       price: selectedItem.price,
       description: selectedItem.description,
