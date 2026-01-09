@@ -1,0 +1,28 @@
+﻿public/images/garments/Algiers Badroune Dziri.png
+public/images/garments/Aures Tribal Melhfa.png
+public/images/garments/Authentic Naili Veil.png
+public/images/garments/Ceremonial Silk Kabyle.png
+public/images/garments/Desert Nomad Robe.png
+public/images/garments/Emerald Majestic Karakou.png
+public/images/garments/Grand Fergani Burgundy.png
+public/images/garments/Indigo Sahara Targuis.png
+public/images/garments/Indigo Tribal Melhfa.png
+public/images/garments/Leather-Trimmed Targuis.png
+public/images/garments/Midnight Fetla Karakou.png
+public/images/garments/Modern Algiers Ensemble.png
+public/images/garments/Modern Floral Fergani.png
+public/images/garments/Modern Set 1.PNG
+public/images/garments/Modern Set 2.PNG
+public/images/garments/Modern Set 3.PNG
+public/images/garments/Modern Set 4.PNG
+public/images/garments/Modern Set 5.png
+public/images/garments/Modern Set 6.png
+public/images/garments/Modern Set 7.PNG
+public/images/garments/Ouadhia Heritage Gown.png
+public/images/garments/Royal Velvet Karakou.png
+public/images/garments/Royal White Naili.png
+public/images/garments/Sapphire Majboud Fergani.png
+public/images/garments/Silk Dziri Kaftan.png
+public/images/garments/Silk Naili Ensemble.png
+public/images/garments/Thagwendourth Classic.png
+public/images/garments/Wedding Velvet Melhfa.png
