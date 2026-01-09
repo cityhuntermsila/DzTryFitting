@@ -418,47 +418,30 @@ const AVAILABLE_COLORS = [
   { hex: '#4b5563', name: 'Grey' },
 ];
 
-export const GALLERY_ITEMS: GalleryItem[] = PARTNERS.flatMap((partner, index) => {
-  const shuffledColors = [...AVAILABLE_COLORS].sort(() => 0.5 - Math.random());
-  const numColors = Math.floor(Math.random() * 3) + 3;
-  const itemColors = shuffledColors.slice(0, numColors).map(c => c.hex);
+export const GALLERY_ITEMS: GalleryItem[] = GARMENTS
+  .filter(g => g.category !== 'Ensemble Moderne')
+  .map((garment, index) => {
+    const partner = PARTNERS.find(p => p.name === garment.region) || PARTNERS[4]; // Default to My Heritage
+    const shuffledColors = [...AVAILABLE_COLORS].sort(() => 0.5 - Math.random());
+    const numColors = Math.floor(Math.random() * 3) + 3;
+    const itemColors = shuffledColors.slice(0, numColors).map(c => c.hex);
 
-  const imgIndex1 = index % TRADITIONAL_IMAGES.length;
-  const imgIndex2 = (index + 1) % TRADITIONAL_IMAGES.length;
-
-  return [
-    {
-      id: `prod-${index}-1`,
-      title: `${partner.name} - Signature Collection`,
+    return {
+      id: `prod-gallery-${garment.id}`,
+      title: `${garment.name} - ${garment.category}`,
       partnerName: partner.name,
       partnerLogo: partner.logo,
-      category: 'Haute Couture',
-      image: TRADITIONAL_IMAGES[imgIndex1],
-      secondaryImage: TRADITIONAL_IMAGES[imgIndex2],
-      date: '2 days ago',
-      likes: 120 + index * 5,
-      price: `${(100 + index * 10).toString()},000 DZD`,
-      description: `A unique handmade piece from ${partner.name}, featuring authentic embroidery and premium fabrics.`,
-      sizes: ['36', '38', '40', '42', 'Custom'],
-      colors: itemColors
-    },
-    {
-      id: `prod-${index}-2`,
-      title: `${partner.name} - Heritage Edit`,
-      partnerName: partner.name,
-      partnerLogo: partner.logo,
-      category: 'Vintage',
-      image: TRADITIONAL_IMAGES[(TRADITIONAL_IMAGES.length - 1 - index) % TRADITIONAL_IMAGES.length],
-      secondaryImage: TRADITIONAL_IMAGES[(index + 2) % TRADITIONAL_IMAGES.length],
-      date: '1 week ago',
-      likes: 85 + index * 3,
-      price: `${(80 + index * 5).toString()},000 DZD`,
-      description: `A vintage-inspired design honoring the ancestral traditions of the region, crafted by ${partner.name}.`,
-      sizes: ['38', '40', '42', '44'],
-      colors: itemColors.slice(0, 3)
-    }
-  ]
-});
+      category: garment.category,
+      image: garment.image,
+      secondaryImage: garment.image, // Using same image for simplicity in gallery
+      date: 'Nouveau',
+      likes: 150 + index * 2,
+      price: garment.price,
+      description: garment.description,
+      sizes: garment.sizes || ['38', '40', '42'],
+      colors: garment.colors || itemColors
+    };
+  });
 
 export const ALL_GARMENTS: Garment[] = [
   ...GARMENTS,
