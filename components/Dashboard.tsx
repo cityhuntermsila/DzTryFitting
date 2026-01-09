@@ -120,10 +120,18 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
             {/* Modern Collection Section */}
             <section className="py-20 bg-gray-50/50">
                 <div className="container mx-auto px-6 mb-12">
-                    <span className="text-accent-600 text-xs font-bold tracking-widest uppercase block mb-2">New Arrival</span>
-                    <h3 className={`text-3xl md:text-4xl font-serif text-gray-900 ${lang === 'ar' ? 'font-arabic' : ''}`}>
-                        {I18N.modern_collection[lang]}
-                    </h3>
+                    <div className="flex items-center gap-4 mb-3">
+                        <div className="w-12 h-12 rounded-full border border-brand-100 p-1 bg-white shadow-sm overflow-hidden">
+                            <img src="images/partners/modern_house.png" alt="Logo Moderne" className="w-full h-full object-cover rounded-full" />
+                        </div>
+                        <div>
+                            <span className="text-accent-600 text-[10px] font-bold tracking-[0.2em] uppercase block">Exclusivité</span>
+                            <h3 className={`text-3xl md:text-4xl font-serif text-gray-900 ${lang === 'ar' ? 'font-arabic' : ''}`}>
+                                {I18N.modern_collection[lang]}
+                            </h3>
+                            <p className="text-xs text-gray-400 mt-1 italic">Par Maison L'Algérienne Moderne</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="container mx-auto px-6">
@@ -145,6 +153,49 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                                 <h4 className="font-serif text-lg text-gray-900 mb-1">{garment.name}</h4>
                                 <div className="flex justify-between items-center">
                                     <span className="text-xs text-gray-500 uppercase tracking-widest">{garment.region}</span>
+                                    <span className="text-sm font-bold text-brand-700">{garment.price}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* My Heritage Section */}
+            <section className="py-20 bg-white">
+                <div className="container mx-auto px-6 mb-12">
+                    <div className="flex items-center gap-4 mb-3">
+                        <div className="w-12 h-12 rounded-full border border-brand-100 p-1 bg-white shadow-sm overflow-hidden">
+                            <img src="images/partners/heritage_logo.png" alt="Logo Heritage" className="w-full h-full object-cover rounded-full" />
+                        </div>
+                        <div>
+                            <span className="text-accent-600 text-[10px] font-bold tracking-[0.2em] uppercase block">Tradition</span>
+                            <h3 className={`text-3xl md:text-4xl font-serif text-gray-900 ${lang === 'ar' ? 'font-arabic' : ''}`}>
+                                {I18N.my_heritage[lang]}
+                            </h3>
+                            <p className="text-xs text-gray-400 mt-1 italic">Par Maison My Heritage</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="container mx-auto px-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {GARMENTS.filter(g => g.category !== 'Ensemble Moderne').map((garment) => (
+                            <div
+                                key={garment.id}
+                                className="group cursor-pointer bg-gray-50 p-4 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500"
+                                onClick={() => onSelectGarment(garment)}
+                            >
+                                <div className="aspect-[3/4] overflow-hidden relative mb-5 rounded-xl">
+                                    <img
+                                        src={garment.image}
+                                        alt={garment.name}
+                                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000"
+                                    />
+                                </div>
+                                <h4 className="font-serif text-lg text-gray-900 mb-1">{garment.name}</h4>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-xs text-gray-400 font-bold uppercase tracking-widest">{garment.region}</span>
                                     <span className="text-sm font-bold text-brand-700">{garment.price}</span>
                                 </div>
                             </div>
