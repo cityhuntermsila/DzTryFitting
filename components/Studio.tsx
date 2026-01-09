@@ -215,7 +215,7 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
             if (garmentMode === 'collection' && selectedGarment) {
                 let description = selectedGarment.description;
                 if (selectedGarment.selectedColor) description += ` Color: ${selectedGarment.selectedColor}.`;
-                result = await generateTryOn(userImage, description, landmarks, undefined, posePrompt);
+                result = await generateTryOn(userImage, description, landmarks, selectedGarment.image, posePrompt);
             } else if (garmentMode === 'upload' && customGarmentImage) {
                 result = await generateTryOn(userImage, "Custom garment", landmarks, customGarmentImage, posePrompt);
             }

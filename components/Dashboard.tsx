@@ -117,6 +117,42 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                 </div>
             </section>
 
+            {/* Modern Collection Section */}
+            <section className="py-20 bg-gray-50/50">
+                <div className="container mx-auto px-6 mb-12">
+                    <span className="text-accent-600 text-xs font-bold tracking-widest uppercase block mb-2">New Arrival</span>
+                    <h3 className={`text-3xl md:text-4xl font-serif text-gray-900 ${lang === 'ar' ? 'font-arabic' : ''}`}>
+                        {I18N.modern_collection[lang]}
+                    </h3>
+                </div>
+
+                <div className="container mx-auto px-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {GARMENTS.filter(g => g.category === 'Ensemble Moderne').map((garment) => (
+                            <div
+                                key={garment.id}
+                                className="group cursor-pointer bg-white p-4 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500"
+                                onClick={() => onSelectGarment(garment)}
+                            >
+                                <div className="aspect-[3/4] overflow-hidden relative mb-5 rounded-xl">
+                                    <img
+                                        src={garment.image}
+                                        alt={garment.name}
+                                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000"
+                                    />
+                                    <div className="absolute top-3 right-3 bg-brand-600 text-white text-[10px] px-3 py-1 rounded-full font-bold">New</div>
+                                </div>
+                                <h4 className="font-serif text-lg text-gray-900 mb-1">{garment.name}</h4>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-xs text-gray-500 uppercase tracking-widest">{garment.region}</span>
+                                    <span className="text-sm font-bold text-brand-700">{garment.price}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
             {/* PARCOURS CLIENT */}
             <section className="py-24 bg-[#fdfbf7] relative border-t border-accent-100 overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-full opacity-40 pointer-events-none">

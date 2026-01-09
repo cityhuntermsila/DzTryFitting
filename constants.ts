@@ -312,6 +312,92 @@ export const GARMENTS: Garment[] = [
     material: 'Crêpe & Gold Cord',
     colors: ['#3b82f6', '#1d4ed8'],
     sizes: ['36', '38', '40', '42']
+  },
+
+  // --- ENSEMBLE MODERNE (Modern Sets) ---
+  {
+    id: 'em1',
+    name: 'Modern Set 1',
+    category: 'Ensemble Moderne',
+    region: 'Modern Algeria',
+    image: 'images/garments/Modern Set 1.PNG',
+    price: '85,000 DZD',
+    description: 'A modern two-piece chic outfit with elegant pants and blazer featuring traditional subtle embroidery.',
+    material: 'Premium Crepe & Silk Thread',
+    colors: ['#f5f5dc', '#ffffff', '#000000', '#4b5563'],
+    sizes: ['36', '38', '40', '42']
+  },
+  {
+    id: 'em2',
+    name: 'Modern Set 2',
+    category: 'Ensemble Moderne',
+    region: 'Modern Algeria',
+    image: 'images/garments/Modern Set 2.PNG',
+    price: '78,000 DZD',
+    description: 'Stylish skirt and top set with a modern silhouette and Berber-inspired geometric patterns.',
+    material: 'Linen & Cotton Blend',
+    colors: ['#fdf5e6', '#8b4513', '#d2b48c', '#ffffff'],
+    sizes: ['38', '40', '42']
+  },
+  {
+    id: 'em3',
+    name: 'Modern Set 3',
+    category: 'Ensemble Moderne',
+    region: 'Modern Algeria',
+    image: 'images/garments/Modern Set 3.PNG',
+    price: '92,000 DZD',
+    description: 'Sophisticated jumpsuit with Algerian golden line details, minimalist and elegant for urban wear.',
+    material: 'Satin Silk',
+    colors: ['#fffaf0', '#ffd700', '#000000'],
+    sizes: ['36', '38', '40']
+  },
+  {
+    id: 'em4',
+    name: 'Modern Set 4',
+    category: 'Ensemble Moderne',
+    region: 'Modern Algeria',
+    image: 'images/garments/Modern Set 4.PNG',
+    price: '65,000 DZD',
+    description: 'Trendy two-piece set with a modern cut, inspired by Algerian heritage in soft pastel colors.',
+    material: 'Soft Cotton',
+    colors: ['#e0ffff', '#f0fff0', '#fff5ee', '#ffffff'],
+    sizes: ['34', '36', '38', '40']
+  },
+  {
+    id: 'em5',
+    name: 'Modern Set 5',
+    category: 'Ensemble Moderne',
+    region: 'Modern Algeria',
+    image: 'images/garments/moderne set 5.PNG',
+    price: '110,000 DZD',
+    description: "Elegant women's power suit with delicate hand-stitched details on sleeve and collar.",
+    material: 'Wool & Silk Lining',
+    colors: ['#4b5563', '#1f2937', '#000000'],
+    sizes: ['38', '40', '42', '44']
+  },
+  {
+    id: 'em6',
+    name: 'Modern Set 6',
+    category: 'Ensemble Moderne',
+    region: 'Modern Algeria',
+    image: 'images/garments/moderne set 6.PNG',
+    price: '95,000 DZD',
+    description: 'A contemporary take on the traditional Badroune, designed for the modern lifestyle.',
+    material: 'Silk Satin',
+    colors: ['#ffffff', '#f3f4f6', '#000000'],
+    sizes: ['36', '38', '40']
+  },
+  {
+    id: 'em7',
+    name: 'Modern Set 7',
+    category: 'Ensemble Moderne',
+    region: 'Modern Algeria',
+    image: 'images/garments/Modern Set 7.PNG',
+    price: '88,000 DZD',
+    description: 'Modern ensemble combining traditional floral motifs with a contemporary urban cut.',
+    material: 'Crêpe de Chine',
+    colors: ['#3b82f6', '#1d4ed8', '#ffffff'],
+    sizes: ['36', '38', '40', '42']
   }
 ];
 
@@ -445,4 +531,5 @@ export const I18N: Translation = {
   sec_return_2: { en: 'Refund within 7 days', ar: 'استرداد خلال 7 أيام' },
   sec_return_3: { en: 'Shipping insurance', ar: 'تأمين النقل' },
   sec_return_4: { en: '24/7 Customer Support', ar: 'دعم العملاء 24/7' },
+  modern_collection: { en: "Modern Women's Sets", ar: 'مجموعة الأطقم العصرية' },
 };
