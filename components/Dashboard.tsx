@@ -347,6 +347,7 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                        {/* Photo Security Card */}
                         <div className="bg-white p-10 rounded-2xl border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300">
                             <div className="flex items-center gap-4 mb-6">
                                 <div className="w-12 h-12 bg-accent-50 rounded-full flex items-center justify-center text-accent-600">
@@ -357,6 +358,40 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                             <ul className="space-y-4 text-gray-600 text-sm">
                                 <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-accent-500"></div>{I18N.sec_photo_1[lang]}</li>
                                 <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-accent-500"></div>{I18N.sec_photo_2[lang]}</li>
+                                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-accent-500"></div>{I18N.sec_photo_3[lang]}</li>
+                                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-accent-500"></div>{I18N.sec_photo_4[lang]}</li>
+                            </ul>
+                        </div>
+
+                        {/* Privacy Card */}
+                        <div className="bg-white p-10 rounded-2xl border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300">
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className="w-12 h-12 bg-accent-50 rounded-full flex items-center justify-center text-accent-600">
+                                    <i className="fa-solid fa-user-shield text-xl"></i>
+                                </div>
+                                <h4 className={`text-xl font-bold text-gray-900 ${lang === 'ar' ? 'font-arabic' : ''}`}>{I18N.sec_privacy_title[lang]}</h4>
+                            </div>
+                            <ul className="space-y-4 text-gray-600 text-sm">
+                                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-accent-500"></div>{I18N.sec_privacy_1[lang]}</li>
+                                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-accent-500"></div>{I18N.sec_privacy_2[lang]}</li>
+                                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-accent-500"></div>{I18N.sec_privacy_3[lang]}</li>
+                                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-accent-500"></div>{I18N.sec_privacy_4[lang]}</li>
+                            </ul>
+                        </div>
+
+                        {/* Free Returns Card */}
+                        <div className="bg-white p-10 rounded-2xl border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300">
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className="w-12 h-12 bg-accent-50 rounded-full flex items-center justify-center text-accent-600">
+                                    <i className="fa-solid fa-arrow-rotate-left text-xl"></i>
+                                </div>
+                                <h4 className={`text-xl font-bold text-gray-900 ${lang === 'ar' ? 'font-arabic' : ''}`}>{I18N.sec_return_title[lang]}</h4>
+                            </div>
+                            <ul className="space-y-4 text-gray-600 text-sm">
+                                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-accent-500"></div>{I18N.sec_return_1[lang]}</li>
+                                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-accent-500"></div>{I18N.sec_return_2[lang]}</li>
+                                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-accent-500"></div>{I18N.sec_return_3[lang]}</li>
+                                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-accent-500"></div>{I18N.sec_return_4[lang]}</li>
                             </ul>
                         </div>
                     </div>
