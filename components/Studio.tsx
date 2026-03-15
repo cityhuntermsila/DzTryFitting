@@ -16,30 +16,26 @@ const normalizeImageToCanvas = (dataUrl: string): Promise<string> => {
     return new Promise((resolve) => {
         const img = new Image();
         img.onload = () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = TARGET_WIDTH;
-            canvas.height = TARGET_HEIGHT;
-            const ctx = canvas.getContext('2d');
-            if (!ctx) {
-                resolve(dataUrl);
-                return;
-            }
-
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, TARGET_WIDTH, TARGET_HEIGHT);
-
-            // Laisser environ 10% de marge blanche autour de la silhouette
-            const MARGIN_FACTOR = 1.1;
+            const MARGIN_FACTOR = 1.0;
             const scale = Math.min(
                 TARGET_WIDTH / (img.width * MARGIN_FACTOR),
                 TARGET_HEIGHT / (img.height * MARGIN_FACTOR)
             );
             const drawWidth = img.width * scale;
             const drawHeight = img.height * scale;
-            const dx = (TARGET_WIDTH - drawWidth) / 2;
-            const dy = (TARGET_HEIGHT - drawHeight) / 2;
 
-            ctx.drawImage(img, dx, dy, drawWidth, drawHeight);
+            const canvas = document.createElement('canvas');
+            canvas.width = drawWidth;
+            canvas.height = drawHeight;
+
+            const ctx = canvas.getContext('2d');
+            if (!ctx) {
+                resolve(dataUrl);
+                return;
+            }
+
+            // Dessiner sans décalage car le canvas fit parfaitement
+            ctx.drawImage(img, 0, 0, drawWidth, drawHeight);
             resolve(canvas.toDataURL('image/png'));
         };
         img.onerror = () => resolve(dataUrl);
