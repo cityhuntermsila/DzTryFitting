@@ -9,6 +9,44 @@ interface StudioProps {
     initialGarment?: Garment | null;
 }
 
+const TARGET_WIDTH = 720;
+const TARGET_HEIGHT = 1024;
+
+const normalizeImageToCanvas = (dataUrl: string): Promise<string> => {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = TARGET_WIDTH;
+            canvas.height = TARGET_HEIGHT;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) {
+                resolve(dataUrl);
+                return;
+            }
+
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, TARGET_WIDTH, TARGET_HEIGHT);
+
+            // Laisser environ 10% de marge blanche autour de la silhouette
+            const MARGIN_FACTOR = 1.1;
+            const scale = Math.min(
+                TARGET_WIDTH / (img.width * MARGIN_FACTOR),
+                TARGET_HEIGHT / (img.height * MARGIN_FACTOR)
+            );
+            const drawWidth = img.width * scale;
+            const drawHeight = img.height * scale;
+            const dx = (TARGET_WIDTH - drawWidth) / 2;
+            const dy = (TARGET_HEIGHT - drawHeight) / 2;
+
+            ctx.drawImage(img, dx, dy, drawWidth, drawHeight);
+            resolve(canvas.toDataURL('image/png'));
+        };
+        img.onerror = () => resolve(dataUrl);
+        img.src = dataUrl;
+    });
+};
+
 const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
     const [step, setStep] = useState<1 | 2>(1);
     const [userImage, setUserImage] = useState<string | null>(null);
@@ -35,6 +73,7 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
     const [isProcessing, setIsProcessing] = useState(false);
     const [isValidating, setIsValidating] = useState(false);
     const [resultImage, setResultImage] = useState<string | null>(null);
+    const [downloadResultImage, setDownloadResultImage] = useState<string | null>(null);
     const [sliderPos, setSliderPos] = useState(50);
 
     // Dragging logic
@@ -56,8 +95,6 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
         phone: '',
         address: ''
     });
-
-    const getLp = (id: string) => landmarks.find(l => l.id === id);
 
     useEffect(() => {
         if (initialGarment) {
@@ -102,7 +139,8 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
                 ctx.translate(canvas.width, 0);
                 ctx.scale(-1, 1);
                 ctx.drawImage(videoRef.current, 0, 0);
-                const dataUrl = canvas.toDataURL('image/png');
+                const rawDataUrl = canvas.toDataURL('image/png');
+                const dataUrl = await normalizeImageToCanvas(rawDataUrl);
 
                 setValidationError(null);
                 setPendingImage(dataUrl);
@@ -138,7 +176,9 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
         if (file.type.startsWith('image/')) {
             const reader = new FileReader();
             reader.onload = async (event) => {
-                const resultData = event.target?.result as string;
+                const rawData = event.target?.result as string;
+                const resultData = await normalizeImageToCanvas(rawData);
+
                 if (isUserImage) {
                     setValidationError(null);
                     setPendingImage(resultData);
@@ -196,15 +236,9 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
         setUserImage(null);
     };
 
-    const handleMouseDown = (id: string) => setDraggingId(id);
-    const handleMouseMove = (e: React.MouseEvent) => {
-        if (!draggingId || !containerRef.current) return;
-        const rect = containerRef.current.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        setLandmarks(prev => prev.map(l => l.id === draggingId ? { ...l, x: Math.max(0, Math.min(100, x)), y: Math.max(0, Math.min(100, y)) } : l));
+    const handleMouseMove = (_e: React.MouseEvent) => {
+        // Ajustement manuel des points désactivé
     };
-    const handleMouseUp = () => setDraggingId(null);
 
     const handleGenerate = async () => {
         if (!userImage) return;
@@ -219,7 +253,16 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
             } else if (garmentMode === 'upload' && customGarmentImage) {
                 result = await generateTryOn(userImage, "Custom garment", landmarks, customGarmentImage, posePrompt);
             }
-            if (result) setResultImage(result);
+            if (result) {
+                setResultImage(result);
+                // Préparer une version normalisée 320x480 pour le téléchargement
+                try {
+                    const resized = await normalizeImageToCanvas(result);
+                    setDownloadResultImage(resized);
+                } catch {
+                    setDownloadResultImage(result);
+                }
+            }
         } catch (error) {
             alert("Erreur de génération. Vérifiez votre clé API.");
         } finally {
@@ -229,6 +272,7 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
 
     const handleReset = () => {
         setResultImage(null);
+        setDownloadResultImage(null);
         setStep(1);
         setUserImage(null);
         setCustomGarmentImage(null);
@@ -239,26 +283,12 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
     };
 
     return (
-        <div className="max-w-7xl mx-auto p-4 md:p-8 min-h-screen flex flex-col gap-8">
-
-            {/* Step Indicator */}
-            <div className="flex items-center justify-center mb-4">
-                <div className={`flex items-center ${step === 1 ? 'text-brand-600' : 'text-gray-400'}`}>
-                    <div className="w-8 h-8 rounded-full border-2 border-current flex items-center justify-center font-bold">1</div>
-                    <span className="mx-2 font-serif">{I18N.upload_photo[lang]}</span>
-                </div>
-                <div className="w-16 h-0.5 bg-gray-200 mx-4"></div>
-                <div className={`flex items-center ${step === 2 || resultImage ? 'text-brand-600' : 'text-gray-400'}`}>
-                    <div className="w-8 h-8 rounded-full border-2 border-current flex items-center justify-center font-bold">2</div>
-                    <span className="mx-2 font-serif">{I18N.select_garment[lang]}</span>
-                </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                <div className="lg:col-span-8">
+        <div className="w-full h-full min-h-screen px-4 md:px-8 py-4 md:py-4 flex flex-col gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start h-[calc(100vh-140px)]">
+                <div className="lg:col-span-8 h-full flex flex-col gap-10">
                     <div
                         className={`
-                  bg-white rounded-3xl shadow-2xl overflow-hidden border transition-all duration-300 min-h-[500px] relative flex items-center justify-center
+                  bg-white rounded-3xl shadow-2xl overflow-hidden border transition-all duration-300 h-full relative flex items-center justify-center
                   ${!userImage && !isCameraActive && isDragOver ? 'border-brand-500 bg-brand-50' : 'border-gray-100'}
                   ${isCameraActive ? 'bg-black' : ''}
               `}
@@ -308,49 +338,95 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
                                 </div>
                             )
                         ) : resultImage ? (
-                            <div className="relative w-full h-full select-none" style={{ minHeight: '600px' }}>
-                                <img src={userImage} alt="Original" className="absolute inset-0 w-full h-full object-contain bg-gray-100" />
-                                <div className="absolute inset-0 overflow-hidden" style={{ width: `${sliderPos}%` }}><img src={resultImage} alt="Result" className="absolute w-full h-full object-contain max-w-none" style={{ width: '100%', height: '100%' }} /></div>
-                                <div className="absolute inset-y-0 w-1 bg-white cursor-ew-resize flex items-center justify-center shadow-[0_0_10px_rgba(0,0,0,0.5)]" style={{ left: `${sliderPos}%` }}><div className="w-8 h-8 bg-brand-600 rounded-full flex items-center justify-center shadow-lg"><i className="fa-solid fa-arrows-left-right text-white text-xs"></i></div></div>
-                                <input type="range" min="0" max="100" value={sliderPos} onChange={(e) => setSliderPos(Number(e.target.value))} className="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-20" />
-                                <div className="absolute bottom-4 right-4 z-30">
-                                    <button onClick={handleReset} className="bg-white/90 backdrop-blur text-gray-900 px-4 py-2 rounded-lg shadow-lg text-sm font-semibold hover:bg-white mr-2">Recommencer</button>
-                                    <a href={resultImage} download="dz_fitting_result.png" className="bg-brand-600 text-white px-4 py-2 rounded-lg shadow-lg text-sm font-semibold hover:brand-700">Télécharger</a>
+                            <div className="w-full h-full flex items-center justify-center">
+                                <div className="relative w-full max-w-[576px] aspect-[45/64] bg-gray-100 rounded-2xl overflow-hidden select-none">
+                                    <img
+                                        src={userImage}
+                                        alt="Original"
+                                        className="absolute inset-0 w-full h-full object-contain"
+                                    />
+                                    <div
+                                        className="absolute inset-0 overflow-hidden"
+                                        style={{ width: `${sliderPos}%` }}
+                                    >
+                                        <img
+                                            src={resultImage}
+                                            alt="Result"
+                                            className="absolute inset-0 w-full h-full object-contain"
+                                        />
+                                    </div>
+                                    <div
+                                        className="absolute inset-y-0 w-1 bg-white cursor-ew-resize flex items-center justify-center shadow-[0_0_10px_rgba(0,0,0,0.5)]"
+                                        style={{ left: `${sliderPos}%` }}
+                                    >
+                                        <div className="w-8 h-8 bg-brand-600 rounded-full flex items-center justify-center shadow-lg">
+                                            <i className="fa-solid fa-arrows-left-right text-white text-xs"></i>
+                                        </div>
+                                    </div>
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max="100"
+                                        value={sliderPos}
+                                        onChange={(e) => setSliderPos(Number(e.target.value))}
+                                        className="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-20"
+                                    />
+                                    <div className="absolute bottom-4 right-4 z-30">
+                                        <button
+                                            onClick={handleReset}
+                                            className="bg-white/90 backdrop-blur text-gray-900 px-4 py-2 rounded-lg shadow-lg text-sm font-semibold hover:bg-white mr-2"
+                                        >
+                                            Recommencer
+                                        </button>
+                                        <a
+                                            href={downloadResultImage || resultImage}
+                                            download="dz_fitting_result.png"
+                                            className="bg-brand-600 text-white px-4 py-2 rounded-lg shadow-lg text-sm font-semibold hover:brand-700"
+                                        >
+                                            Télécharger
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         ) : (
-                            <div ref={containerRef} className="relative w-full h-full cursor-crosshair bg-gray-100" onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
-                                <img src={userImage} alt="Calibration" className="w-full h-full object-contain select-none pointer-events-none" />
-                                <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-50 overflow-visible" preserveAspectRatio="none">
-                                    <g filter="url(#glow)">
-                                        {(() => {
-                                            const neck = getLp('neck'), ls = getLp('l_shoulder'), rs = getLp('r_shoulder'), waist = getLp('waist'), lh = getLp('l_hip'), rh = getLp('r_hip'), la = getLp('l_ankle'), ra = getLp('r_ankle');
-                                            if (!ls || !rs || !lh || !rh || !waist || !neck || !la || !ra) return null;
-                                            return (<path d={`M ${ls.x},${ls.y} L ${neck.x},${neck.y} L ${rs.x},${rs.y} M ${ls.x},${ls.y} L ${waist.x},${waist.y} L ${rs.x},${rs.y} M ${waist.x},${waist.y} L ${lh.x},${lh.y} L ${rh.x},${rh.y} L ${waist.x},${waist.y} M ${lh.x},${lh.y} L ${la.x},${la.y} M ${rh.x},${rh.y} L ${ra.x},${ra.y}`} fill="none" stroke="#d4af37" strokeWidth="1" strokeDasharray="4,2" vectorEffect="non-scaling-stroke" />);
-                                        })()}
-                                    </g>
-                                </svg>
-                                <div className="absolute top-4 left-0 right-0 text-center pointer-events-none flex flex-col items-center gap-2">
-                                    <span className="bg-black/80 text-white px-6 py-2 rounded-full text-sm backdrop-blur-md shadow-2xl border border-white/10 flex items-center gap-2"><i className="fa-solid fa-arrows-to-dot text-accent-400"></i>Ajustez les points de coupe</span>
-                                    <button onClick={() => setUserImage(null)} className="pointer-events-auto mt-2 bg-white/20 hover:bg-white/40 text-white px-3 py-1 rounded-full text-xs backdrop-blur-md transition-colors border border-white/10">Changer de photo</button>
+                            <div className="w-full h-full flex items-center justify-center">
+                                <div className="relative w-full max-w-[576px] aspect-[45/64] bg-gray-100 rounded-2xl overflow-hidden">
+                                    <img
+                                        src={userImage}
+                                        alt="Aperçu"
+                                        className="absolute inset-0 w-full h-full object-contain select-none"
+                                    />
+                                    <button
+                                        onClick={() => setUserImage(null)}
+                                        className="absolute top-4 right-4 bg-white/90 hover:bg-white text-gray-900 px-3 py-1 rounded-full text-xs shadow-md border border-gray-200"
+                                    >
+                                        Changer de photo
+                                    </button>
                                 </div>
-                                {landmarks.map((l) => (
-                                    <div key={l.id} className={`absolute w-8 h-8 -ml-4 -mt-4 rounded-full border-2 border-white shadow-[0_0_15px_rgba(212,175,55,0.5)] cursor-move flex items-center justify-center group hover:scale-125 transition-transform z-10 ${l.id === draggingId ? 'bg-accent-500 scale-110' : 'bg-accent-400 hover:bg-accent-500'}`} style={{ left: `${l.x}%`, top: `${l.y}%` }} onMouseDown={() => handleMouseDown(l.id)}>
-                                        <div className="w-2 h-2 bg-white rounded-full"></div>
-                                        <div className="absolute bottom-full mb-3 whitespace-nowrap bg-luxury-dark/90 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-xl border border-white/10">{l.label}</div>
-                                    </div>
-                                ))}
                             </div>
                         )}
+                    </div>
+
+                    {/* Step Indicator under main image area */}
+                    <div className="flex items-center justify-center">
+                        <div className={`flex items-center ${step === 1 ? 'text-brand-600' : 'text-gray-400'}`}>
+                            <div className="w-8 h-8 rounded-full border-2 border-current flex items-center justify-center font-bold">1</div>
+                            <span className="mx-2 font-serif">{I18N.upload_photo[lang]}</span>
+                        </div>
+                        <div className="w-16 h-0.5 bg-gray-200 mx-4"></div>
+                        <div className={`flex items-center ${step === 2 || resultImage ? 'text-brand-600' : 'text-gray-400'}`}>
+                            <div className="w-8 h-8 rounded-full border-2 border-current flex items-center justify-center font-bold">2</div>
+                            <span className="mx-2 font-serif">{I18N.select_garment[lang]}</span>
+                        </div>
                     </div>
                 </div>
 
                 <div className="lg:col-span-4 flex flex-col gap-6 sticky top-8">
                     {!resultImage && (
-                        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 flex flex-col max-h-[calc(100vh-100px)] overflow-hidden">
+                        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 flex flex-col max-h-[calc(100vh-140px)] overflow-hidden">
                             <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-100 shrink-0">
-                                <h3 className="font-serif text-xl text-gray-900">{I18N.select_garment[lang]}</h3>
-                                <div className="flex bg-gray-100 p-1 rounded-lg">
+                                <h3 className="font-serif text-0.5xl text-gray-900">{I18N.select_garment[lang]}</h3>
+                                <div className="flex bg-gray-100 p-0.5 rounded-lg">
                                     <button onClick={() => setGarmentMode('collection')} className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${garmentMode === 'collection' ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-900'}`}>Collection</button>
                                     <button onClick={() => setGarmentMode('upload')} className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${garmentMode === 'upload' ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-900'}`}>Upload</button>
                                 </div>
@@ -370,16 +446,22 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
                                 </div>
                             )}
                             {garmentMode === 'collection' && (
-                                <div className="flex-1 flex flex-col min-h-0 overflow-y-auto pr-1">
-                                    {ALL_GARMENTS.map(g => (
-                                        <div key={g.id} onClick={() => setSelectedGarment(g)} className={`flex items-center gap-4 p-3 rounded-xl border-2 transition-all mb-3 cursor-pointer ${selectedGarment?.id === g.id ? 'border-brand-500 bg-brand-50' : 'border-gray-50 hover:border-gray-200'}`}>
-                                            <img src={g.image} className="w-16 h-20 rounded-lg object-cover bg-gray-100" />
-                                            <div className="flex-1 min-w-0">
-                                                <h4 className="text-sm font-bold truncate">{g.name}</h4>
-                                                <p className="text-[10px] text-gray-400 uppercase tracking-widest">{g.region}</p>
-                                            </div>
-                                        </div>
-                                    ))}
+                                <div className="flex-1 flex flex-col min-h-0 overflow-x-auto overflow-y-hidden">
+                                    <div className="flex gap-3 pr-2">
+                                        {ALL_GARMENTS.map(g => (
+                                            <button
+                                                key={g.id}
+                                                onClick={() => setSelectedGarment(g)}
+                                                className={`flex flex-col items-center w-28 flex-shrink-0 rounded-xl border-2 transition-all p-2 cursor-pointer ${selectedGarment?.id === g.id ? 'border-brand-500 bg-brand-50' : 'border-gray-50 hover:border-gray-200'
+                                                    }`}
+                                            >
+                                                <img src={g.image} className="w-full h-28 rounded-lg object-cover bg-gray-100 mb-2" />
+                                                <span className="text-[11px] font-semibold text-gray-900 text-center line-clamp-2">
+                                                    {g.name}
+                                                </span>
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
                             )}
                         </div>

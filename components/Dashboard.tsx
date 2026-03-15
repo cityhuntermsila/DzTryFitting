@@ -12,67 +12,65 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
     return (
         <div className="flex flex-col w-full animate-fade-in bg-white">
 
-            {/* Top Notification Bar */}
-            <div className="bg-[#881337] text-white text-[10px] md:text-xs py-2.5 text-center tracking-[0.2em] font-bold uppercase z-20 relative">
-                {lang === 'ar' ? 'توصيل لـ 69 ولاية • دفع آمن • جودة أصلية' : 'DELIVERY 69 WILAYAS • SECURE PAYMENT • AUTHENTIC QUALITY'}
-            </div>
-
             {/* Hero Section */}
-            <section className="relative w-full bg-[#0a0f18] text-white py-24 md:py-32 lg:py-40 px-6 flex flex-col items-center text-center overflow-hidden">
+            <section className="relative w-full bg-transparent text-white py-20 md:py-24 lg:py-32 px-6 flex flex-col items-center text-center overflow-hidden min-h-[80px] md:min-h-[100px] lg:min-h-[200px]">
 
                 {/* Background Image from local directory */}
-                <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 z-0 flex items-center justify-center">
                     <img
                         src="images/backgrounds/heritage_hero.png"
                         alt="Algerian Heritage Background"
-                        className="w-full h-full object-cover object-center opacity-40 md:opacity-50"
+                        className="max-w-none w-auto h-full object-contain transform scale-[0.95] transition-transform duration-1000"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-[#0a0f18]"></div>
                 </div>
 
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-900/20 blur-[120px] rounded-full pointer-events-none z-0"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] bg-brand-900/20 blur-[100px] rounded-full pointer-events-none z-0"></div>
 
                 <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
-                    <div className="inline-block border border-white/20 rounded-full px-5 py-1.5 mb-10 backdrop-blur-md bg-white/5">
-                        <span className="text-[10px] md:text-xs tracking-[0.25em] uppercase text-gray-200 font-medium">
-                            Heritage Collection 2026
-                        </span>
-                    </div>
+                </div>
+            </section>
 
-                    <h1 className={`text-5xl md:text-7xl lg:text-8xl font-serif mb-8 leading-[1.1] drop-shadow-lg ${lang === 'ar' ? 'font-arabic' : ''}`}>
-                        Embrace Your <br />
-                        <span className="italic text-[#fda4af] font-serif">Roots.</span>
+            {/* Notification Bar (bottom of hero) */}
+            <div className="bg-[#881337] text-white text-[10px] md:text-xs py-2.5 text-center tracking-[0.2em] font-bold uppercase z-10 relative">
+                {lang === 'ar' ? 'توصيل لـ 69 ولاية • دفع آمن • جودة أصلية' : 'DELIVERY 69 WILAYAS • SECURE PAYMENT • AUTHENTIC QUALITY'}
+            </div>
+
+            {/* New Call to Action Section */}
+            <div className="bg-white py-2 flex flex-col items-center justify-center gap-5 px-6 relative z-10 border-b border-gray-100">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-3xl">
+                    <button
+                        onClick={() => setView(ViewState.STUDIO)}
+                        className="bg-white text-gray-900 border border-gray-900 hover:bg-[#f97373] hover:text-white hover:border-[#f97373] px-8 py-4 w-full sm:w-auto font-serif font-bold text-xs sm:text-sm tracking-widest uppercase transition-all duration-600 shadow-xl"
+                    >
+                        {I18N.cta_start[lang]}
+                    </button>
+                    <button
+                        onClick={() => setView(ViewState.GALLERY)}
+                        className="bg-[#111827] backdrop-blur-sm border border-gray-900 text-white hover:bg-white hover:text-[#111827] hover:border-[#111827] px-16 py-4 w-full sm:w-auto font-serif font-bold text-xs sm:text-sm tracking-widest uppercase transition-all duration-300 shadow-lg text-center"
+                    >
+                        {lang === 'ar' ? 'اكتشف التراث' : 'Explore Heritage'}
+                    </button>
+                </div>
+
+                <div className="text-center max-w-3xl">
+                    <h1 className={`text-4xl md:text-5xl font-serif mb-4 leading-[1.1] text-gray-900 ${lang === 'ar' ? 'font-arabic' : ''}`}>
+                        Embrace Your <span className="italic text-[#e11d48] font-serif">Roots.</span>
                     </h1>
 
-                    <p className={`text-gray-200 text-base md:text-lg max-w-2xl mb-12 leading-relaxed font-light drop-shadow-md ${lang === 'ar' ? 'font-arabic' : 'font-sans'}`}>
+                    <p className={`text-gray-600 text-sm md:text-base leading-relaxed font-light ${lang === 'ar' ? 'font-arabic' : 'font-sans'}`}>
                         {lang === 'ar'
                             ? 'اكتشف غرفة القياس الافتراضية المخصصة للأزياء التقليدية الجزائرية. من الكاراكو الفخم إلى البلوزة الأنيقة، شاهد التاريخ عليك.'
                             : 'Experience the ultimate virtual fitting room dedicated to Algerian traditional attire. From the majestic Karakou to the elegant Blouza, visualize history on yourself.'}
                     </p>
-
-                    <div className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto px-4">
-                        <button
-                            onClick={() => setView(ViewState.STUDIO)}
-                            className="bg-white text-gray-900 border border-white hover:bg-gray-100 px-8 py-3.5 min-w-[200px] font-serif font-bold text-sm tracking-widest uppercase transition-all duration-300 shadow-xl"
-                        >
-                            {I18N.cta_start[lang]}
-                        </button>
-                        <button
-                            onClick={() => setView(ViewState.GALLERY)}
-                            className="bg-black/30 backdrop-blur-sm border border-white/30 text-white hover:border-white hover:bg-white/10 px-8 py-3.5 min-w-[200px] font-serif font-bold text-sm tracking-widest uppercase transition-all duration-300"
-                        >
-                            {lang === 'ar' ? 'اكتشف التراث' : 'Explore Heritage'}
-                        </button>
-                    </div>
                 </div>
-            </section>
+            </div>
 
             {/* Iconic Collections */}
-            <section className="py-20 bg-white">
+            <section className="py-8 bg-white">
                 <div className="container mx-auto px-6 mb-12 flex flex-col md:flex-row justify-between items-end gap-4">
                     <div>
                         <span className="text-brand-600 text-xs font-bold tracking-widest uppercase block mb-2">Curated Selection</span>
-                        <h3 className={`text-3xl md:text-4xl font-serif text-gray-900 ${lang === 'ar' ? 'font-arabic' : ''}`}>
+                        <h3 className={`text-3xl md:text-1xl font-serif text-gray-900 ${lang === 'ar' ? 'font-arabic' : ''}`}>
                             {lang === 'ar' ? 'مجموعات أيقونية' : 'Iconic Collections'}
                         </h3>
                     </div>
@@ -87,11 +85,11 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                 </div>
 
                 <div className="w-full overflow-hidden">
-                    <div className="flex animate-infinite-scroll hover:[animation-play-state:paused] gap-6 px-4 w-max">
+                    <div className="flex animate-infinite-scroll hover:[animation-play-state:paused] gap-2 px-4 w-max">
                         {[...GARMENTS, ...GARMENTS].map((garment, idx) => (
                             <div
                                 key={`${garment.id}-${idx}`}
-                                className="flex-none w-[280px] md:w-[340px] group cursor-pointer"
+                                className="flex-none w-[168px] md:w-[204px] group cursor-pointer"
                                 onClick={() => onSelectGarment(garment)}
                             >
                                 <div className="aspect-[3/4] overflow-hidden relative mb-5 bg-gray-100 rounded-xl">
@@ -118,7 +116,7 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
             </section>
 
             {/* Modern Collection Section */}
-            <section className="py-20 bg-gray-50/50">
+            <section className="py-2 bg-gray-50/50">
                 <div className="container mx-auto px-6 mb-12">
                     <div className="flex items-center gap-4 mb-3">
                         <div className="w-12 h-12 rounded-full border border-brand-100 p-1 bg-white shadow-sm overflow-hidden">
@@ -135,11 +133,11 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                 </div>
 
                 <div className="container mx-auto px-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1">
                         {GARMENTS.filter(g => g.category === 'Ensemble Moderne').map((garment) => (
                             <div
                                 key={garment.id}
-                                className="group cursor-pointer bg-white p-4 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500"
+                                className="group cursor-pointer bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500"
                                 onClick={() => onSelectGarment(garment)}
                             >
                                 <div className="aspect-[3/4] overflow-hidden relative mb-5 rounded-xl">
