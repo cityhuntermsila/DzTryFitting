@@ -19,14 +19,12 @@ const normalizeImageToCanvas = (dataUrl: string): Promise<string> => {
             const canvas = document.createElement('canvas');
             canvas.width = TARGET_WIDTH;
             canvas.height = TARGET_HEIGHT;
+            // Plus de remplissage blanc pour permettre la transparence
             const ctx = canvas.getContext('2d');
             if (!ctx) {
                 resolve(dataUrl);
                 return;
             }
-
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, TARGET_WIDTH, TARGET_HEIGHT);
 
             // Laisser environ 10% de marge blanche autour de la silhouette
             const MARGIN_FACTOR = 1.1;
@@ -339,7 +337,7 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
                             )
                         ) : resultImage ? (
                             <div className="w-full h-full flex items-center justify-center">
-                                <div className="relative w-full max-w-[576px] aspect-[45/64] bg-gray-100 rounded-2xl overflow-hidden select-none">
+                                <div className="relative w-full max-w-[576px] aspect-[45/64] rounded-2xl overflow-hidden select-none">
                                     <img
                                         src={userImage}
                                         alt="Original"
@@ -390,7 +388,7 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
                             </div>
                         ) : (
                             <div className="w-full h-full flex items-center justify-center">
-                                <div className="relative w-full max-w-[576px] aspect-[45/64] bg-gray-100 rounded-2xl overflow-hidden">
+                                <div className="relative w-full max-w-[576px] aspect-[45/64] rounded-2xl overflow-hidden">
                                     <img
                                         src={userImage}
                                         alt="Aperçu"
