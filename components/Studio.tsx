@@ -9,8 +9,8 @@ interface StudioProps {
     initialGarment?: Garment | null;
 }
 
-const TARGET_WIDTH = 720;
-const TARGET_HEIGHT = 1024;
+const TARGET_WIDTH = 1440;
+const TARGET_HEIGHT = 2048;
 
 const normalizeImageToCanvas = (dataUrl: string): Promise<string> => {
     return new Promise((resolve) => {

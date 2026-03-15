@@ -7,9 +7,9 @@ const MODEL_NAME = 'gemini-2.5-flash-image';
 /**
  * Redimensionne une image base64 pour éviter les erreurs RPC (payload trop large)
  * et optimiser la vitesse de traitement de l'IA.
- * Réduit à 800px pour une stabilité maximale.
+ * Réduit à 1600px pour une meilleure qualité tout en restant stable.
  */
-const resizeImage = (base64Str: string, maxWidth = 800, maxHeight = 800): Promise<string> => {
+const resizeImage = (base64Str: string, maxWidth = 1600, maxHeight = 1600): Promise<string> => {
     return new Promise((resolve) => {
         const img = new Image();
         img.src = base64Str;
@@ -34,7 +34,7 @@ const resizeImage = (base64Str: string, maxWidth = 800, maxHeight = 800): Promis
             canvas.height = height;
             const ctx = canvas.getContext('2d');
             ctx?.drawImage(img, 0, 0, width, height);
-            resolve(canvas.toDataURL('image/jpeg', 0.8));
+            resolve(canvas.toDataURL('image/jpeg', 1.0));
         };
     });
 };
