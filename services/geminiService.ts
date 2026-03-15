@@ -34,7 +34,7 @@ const resizeImage = (base64Str: string, maxWidth = 1600, maxHeight = 1600): Prom
             canvas.height = height;
             const ctx = canvas.getContext('2d');
             ctx?.drawImage(img, 0, 0, width, height);
-            resolve(canvas.toDataURL('image/png'));
+            resolve(canvas.toDataURL('image/jpeg', 1.0));
         };
     });
 };
@@ -110,7 +110,6 @@ export const generateTryOn = async (
     2. MOTIF PRESERVATION: Every embroidery, bead, and lace pattern must be a 1:1 replica of the garment source.
     3. TOTAL OVERLAY: The new garment must completely replace and hide any original clothing in the target area.
     4. IDENTITY: Keep the person's face, features, and hair exactly the same.
-    5. BACKGROUND: Place the person against a PURE PLAIN FLAT WHITE background to allow for background removal. DO NOT keep the original background.
     
     LANDMARKS: ${landmarkDesc}.
     ${poseConstraint}
