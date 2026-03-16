@@ -266,6 +266,64 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
         }
     };
 
+    const dataURItoBlob = (dataURI: string) => {
+        const byteString = atob(dataURI.split(',')[1]);
+        const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+        return new Blob([ab], { type: mimeString });
+    };
+
+    const handleDownload = () => {
+        const imageToDownload = downloadResultImage || resultImage;
+        if (!imageToDownload) return;
+
+        try {
+            const blob = dataURItoBlob(imageToDownload);
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `dz_fitting_${Date.now()}.png`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            setTimeout(() => URL.revokeObjectURL(url), 100);
+        } catch (e) {
+            console.error("Download error:", e);
+            // Fallback for simple download if blob fails
+            const link = document.createElement('a');
+            link.href = imageToDownload;
+            link.download = "dz_fitting_result.png";
+            link.click();
+        }
+    };
+
+    const handleShare = async () => {
+        const imageToShare = downloadResultImage || resultImage;
+        if (!imageToShare) return;
+
+        try {
+            const blob = dataURItoBlob(imageToShare);
+            const file = new File([blob], 'my_fitting.png', { type: 'image/png' });
+
+            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                await navigator.share({
+                    files: [file],
+                    title: 'My Traditional Fitting',
+                    text: 'Check out my traditional Algerian outfit from DZtryFitting!'
+                });
+            } else {
+                // Fallback to clipboard or just alert
+                alert("Sharing is not supported on this browser. Try long-pressing the image to save it.");
+            }
+        } catch (e) {
+            console.error("Sharing error:", e);
+        }
+    };
+
     const handleReset = () => {
         setResultImage(null);
         setDownloadResultImage(null);
@@ -367,20 +425,27 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
                                         onChange={(e) => setSliderPos(Number(e.target.value))}
                                         className="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-20"
                                     />
-                                    <div className="absolute bottom-4 right-4 z-30">
+                                    <div className="absolute bottom-4 right-4 z-30 flex gap-2">
                                         <button
                                             onClick={handleReset}
-                                            className="bg-white/90 backdrop-blur text-gray-900 px-4 py-2 rounded-lg shadow-lg text-sm font-semibold hover:bg-white mr-2"
+                                            className="bg-white/90 backdrop-blur text-gray-900 px-4 py-2 rounded-lg shadow-lg text-sm font-semibold hover:bg-white"
                                         >
                                             Restart
                                         </button>
-                                        <a
-                                            href={downloadResultImage || resultImage}
-                                            download="dz_fitting_result.png"
-                                            className="bg-brand-600 text-white px-4 py-2 rounded-lg shadow-lg text-sm font-semibold hover:brand-700"
+                                        <button
+                                            onClick={handleDownload}
+                                            className="bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg text-sm font-semibold hover:bg-black flex items-center gap-2"
                                         >
+                                            <i className="fa-solid fa-download"></i>
                                             Download
-                                        </a>
+                                        </button>
+                                        <button
+                                            onClick={handleShare}
+                                            className="bg-brand-600 text-white px-4 py-2 rounded-lg shadow-lg text-sm font-semibold hover:brand-700 flex items-center gap-2"
+                                        >
+                                            <i className="fa-solid fa-share-nodes"></i>
+                                            Share
+                                        </button>
                                     </div>
                                 </div>
                             </div>
