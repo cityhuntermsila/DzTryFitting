@@ -147,11 +147,11 @@ const Gallery: React.FC<GalleryProps> = ({ lang, onTryOn }) => {
             </button>
 
             {/* Left: Product Image */}
-            <div className="w-full md:w-1/2 h-[40vh] md:h-full bg-gray-50 flex items-center justify-center relative overflow-hidden group/modal-img">
+            <div className="w-full md:w-1/2 h-[90vh] md:h-full bg-gray-50 flex items-center justify-center relative overflow-hidden group/modal-img">
               <img
                 src={activeImage || selectedItem.image}
                 alt={selectedItem.title}
-                className="w-full h-full object-cover md:object-contain bg-white"
+                className="w-full h-full object-contain bg-white"
               />
               <div className="absolute inset-0 bg-black/5 opacity-0 group-hover/modal-img:opacity-100 transition-opacity pointer-events-none"></div>
             </div>
