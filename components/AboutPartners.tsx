@@ -272,108 +272,120 @@ const AboutPartners: React.FC<Props> = ({ view, lang, onTryOn }) => {
                           ))}
                       </div>
 
-                      {/* Product Detail Modal */}
+                      {/* Product Detail Modal - Full Screen */}
                       {selectedItem && (
-                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={closeItem}></div>
-                          <div className="relative bg-white rounded-3xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto animate-fade-in flex flex-col md:flex-row">
+                        <div className="fixed inset-0 z-[60] flex items-center justify-center animate-fade-in overflow-hidden">
+                          <div className="absolute inset-0 bg-white z-0" onClick={closeItem}></div>
+                          
+                          <div className="relative bg-white w-full h-full md:h-screen overflow-y-auto z-10 flex flex-col md:flex-row">
                             
-                            <button onClick={closeItem} className="absolute top-4 right-4 z-10 bg-white/50 hover:bg-white p-2 rounded-full transition-colors">
-                              <i className="fa-solid fa-xmark text-xl text-gray-800"></i>
+                            <button 
+                              onClick={closeItem} 
+                              className="fixed top-6 right-6 z-50 bg-gray-100 hover:bg-gray-200 p-4 rounded-full transition-all shadow-lg active:scale-95"
+                            >
+                              <i className="fa-solid fa-xmark text-2xl text-gray-800"></i>
                             </button>
 
-                            {/* Left: Images */}
-                            <div className="w-full md:w-1/2 p-2 md:p-6 flex flex-col gap-4">
-                              <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-gray-100 shadow-inner">
-                                <img src={activeImage || selectedItem.image} alt={selectedItem.title} className="w-full h-full object-cover" />
+                            {/* Left: Images - Expandable on desktop */}
+                            <div className="w-full md:w-3/5 h-[50vh] md:h-full bg-gray-50 flex flex-col items-center justify-center relative overflow-hidden p-4 md:p-12">
+                              <div className="aspect-[3/4] w-full max-w-2xl rounded-3xl overflow-hidden bg-white shadow-2xl relative group/partner-img">
+                                <img src={activeImage || selectedItem.image} alt={selectedItem.title} className="w-full h-full object-cover md:object-contain" />
+                                <div className="absolute inset-0 bg-black/5 opacity-0 group-hover/partner-img:opacity-100 transition-opacity pointer-events-none"></div>
                               </div>
-                              <div className="flex gap-4 overflow-x-auto p-1">
-                                <div 
+                              
+                              <div className="mt-8 flex gap-4 overflow-x-auto p-2 w-full max-w-2xl justify-center">
+                                <button 
                                   onClick={() => setActiveImage(selectedItem.image)}
-                                  className={`w-20 h-24 rounded-lg overflow-hidden cursor-pointer border-2 ${activeImage === selectedItem.image ? 'border-brand-600' : 'border-transparent'}`}
+                                  className={`w-20 h-24 rounded-xl overflow-hidden cursor-pointer border-4 transition-all shrink-0 ${activeImage === selectedItem.image ? 'border-brand-600 scale-105 shadow-md' : 'border-transparent opacity-60 hover:opacity-100'}`}
                                 >
                                   <img src={selectedItem.image} className="w-full h-full object-cover" />
-                                </div>
-                                <div 
+                                </button>
+                                <button 
                                   onClick={() => setActiveImage(selectedItem.secondaryImage)}
-                                  className={`w-20 h-24 rounded-lg overflow-hidden cursor-pointer border-2 ${activeImage === selectedItem.secondaryImage ? 'border-brand-600' : 'border-transparent'}`}
+                                  className={`w-20 h-24 rounded-xl overflow-hidden cursor-pointer border-4 transition-all shrink-0 ${activeImage === selectedItem.secondaryImage ? 'border-brand-600 scale-105 shadow-md' : 'border-transparent opacity-60 hover:opacity-100'}`}
                                 >
                                   <img src={selectedItem.secondaryImage} className="w-full h-full object-cover" />
-                                </div>
+                                </button>
                               </div>
                             </div>
 
-                            {/* Right: Info */}
-                            <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col">
-                              <div className="mb-6">
-                                <div className="flex items-center gap-2 mb-2">
-                                  <img src={selectedItem.partnerLogo} className="w-6 h-6 rounded-full" />
-                                  <span className="text-sm text-gray-500 font-bold uppercase tracking-wider">{selectedItem.partnerName}</span>
+                            {/* Right: Info - Scrolled content */}
+                            <div className="w-full md:w-2/5 p-8 md:p-16 flex flex-col">
+                              <div className="max-w-xl mx-auto w-full flex flex-col h-full justify-center">
+                                <div className="mb-10">
+                                  <div className="flex items-center gap-3 mb-4">
+                                    <img src={selectedItem.partnerLogo} className="w-8 h-8 rounded-full border border-gray-100 shadow-sm" />
+                                    <span className="text-sm font-bold text-gray-400 uppercase tracking-widest">{selectedItem.partnerName}</span>
+                                  </div>
+                                  <h2 className="text-3xl md:text-5xl font-serif font-bold text-gray-900 leading-tight mb-4">{selectedItem.title}</h2>
+                                  <div className="text-3xl text-brand-600 font-bold mb-6">{selectedItem.price}</div>
+                                  <div className="h-1.5 w-24 bg-brand-600 rounded-full"></div>
                                 </div>
-                                <h2 className="text-3xl font-serif font-bold text-gray-900 mb-2">{selectedItem.title}</h2>
-                                <div className="text-2xl text-brand-600 font-bold">{selectedItem.price}</div>
-                              </div>
 
-                              <div className="prose prose-sm text-gray-600 mb-8">
-                                <p>{selectedItem.description}</p>
-                              </div>
-
-                              {/* Sizes */}
-                              <div className="mb-6">
-                                <h4 className="text-xs font-bold text-gray-900 uppercase tracking-widest mb-3">
-                                    Available Sizes
-                                </h4>
-                                <div className="flex flex-wrap gap-2">
-                                    {selectedItem.sizes.map(size => (
-                                      <button 
-                                        key={size} 
-                                        onClick={() => setActiveSize(size)}
-                                        className={`w-10 h-10 border rounded-lg flex items-center justify-center text-sm font-medium transition-all
-                                            ${activeSize === size 
-                                                ? 'border-brand-600 bg-brand-600 text-white shadow-md' 
-                                                : 'border-gray-200 hover:border-brand-400 hover:text-brand-600 text-gray-700'}
-                                        `}
-                                      >
-                                        {size}
-                                      </button>
-                                    ))}
+                                <div className="prose prose-lg text-gray-600 mb-10 leading-relaxed font-light">
+                                  <p>{selectedItem.description}</p>
                                 </div>
-                              </div>
 
-                              {/* Colors */}
-                              <div className="mb-8">
-                                <h4 className="text-xs font-bold text-gray-900 uppercase tracking-widest mb-3">
-                                    Colors ({selectedItem.colors.length})
-                                </h4>
-                                <div className="flex gap-3">
-                                    {selectedItem.colors.map(color => (
-                                      <button 
-                                        key={color} 
-                                        onClick={() => setActiveColor(color)}
-                                        className={`w-8 h-8 rounded-full border shadow-sm transition-all relative
-                                            ${activeColor === color ? 'ring-2 ring-brand-500 ring-offset-2 scale-110' : 'border-gray-200 hover:scale-110'}
-                                        `}
-                                        style={{ backgroundColor: color }}
-                                        title={color}
-                                      >
-                                        {activeColor === color && <i className="fa-solid fa-check text-white text-xs drop-shadow-md"></i>}
-                                      </button>
-                                    ))}
+                                {/* Sizes */}
+                                <div className="mb-8">
+                                  <div className="flex justify-between items-center mb-4">
+                                    <h4 className="text-xs font-bold text-gray-900 uppercase tracking-widest">
+                                        Select Size
+                                    </h4>
+                                    <button className="text-xs text-brand-600 font-bold hover:underline">View Measurements</button>
+                                  </div>
+                                  <div className="flex flex-wrap gap-3">
+                                      {selectedItem.sizes.map(size => (
+                                        <button 
+                                          key={size} 
+                                          onClick={() => setActiveSize(size)}
+                                          className={`w-14 h-14 border-2 rounded-2xl flex items-center justify-center text-base font-bold transition-all
+                                              ${activeSize === size 
+                                                  ? 'border-brand-600 bg-brand-600 text-white shadow-lg scale-105' 
+                                                  : 'border-gray-100 text-gray-400 hover:border-brand-200 hover:text-brand-600 bg-white'}
+                                          `}
+                                        >
+                                          {size}
+                                        </button>
+                                      ))}
+                                  </div>
                                 </div>
-                              </div>
 
-                              {/* Actions */}
-                              <div className="mt-auto space-y-3">
-                                <button 
-                                    onClick={handleVirtualTryOnClick}
-                                    className="w-full bg-brand-600 text-white py-4 rounded-xl font-bold shadow-lg hover:bg-brand-700 transition-all flex items-center justify-center gap-2"
-                                >
-                                    <i className="fa-solid fa-wand-magic-sparkles"></i>
-                                    Virtual Try-On
-                                </button>
-                                <button className="w-full border border-gray-200 text-gray-900 py-4 rounded-xl font-bold hover:bg-gray-50 transition-all">
-                                    Add to Cart
-                                </button>
+                                {/* Colors */}
+                                <div className="mb-10">
+                                  <h4 className="text-xs font-bold text-gray-900 uppercase tracking-widest mb-4">
+                                      Primary Colors ({selectedItem.colors.length})
+                                  </h4>
+                                  <div className="flex gap-4">
+                                      {selectedItem.colors.map(color => (
+                                        <button 
+                                          key={color} 
+                                          onClick={() => setActiveColor(color)}
+                                          className={`w-12 h-12 rounded-2xl border-2 shadow-sm transition-all relative
+                                              ${activeColor === color ? 'border-brand-600 ring-4 ring-brand-50 scale-110 shadow-lg' : 'border-white hover:scale-110'}
+                                          `}
+                                          style={{ backgroundColor: color }}
+                                          title={color}
+                                        >
+                                          {activeColor === color && <i className="fa-solid fa-check text-white text-xs drop-shadow-md"></i>}
+                                        </button>
+                                      ))}
+                                  </div>
+                                </div>
+
+                                {/* Actions */}
+                                <div className="mt-auto space-y-4 pt-12">
+                                  <button 
+                                      onClick={handleVirtualTryOnClick}
+                                      className="w-full bg-brand-600 text-white py-6 rounded-2xl font-bold shadow-2xl hover:bg-brand-700 transition-all flex items-center justify-center gap-4 text-xl hover:-translate-y-1 active:scale-[0.98]"
+                                  >
+                                      <i className="fa-solid fa-wand-magic-sparkles"></i>
+                                      Start Virtual Try-On
+                                  </button>
+                                  <button className="w-full border-2 border-gray-100 text-gray-900 py-6 rounded-2xl font-bold hover:bg-gray-50 transition-all text-lg shadow-sm">
+                                      Add to Private Collection
+                                  </button>
+                                </div>
                               </div>
                             </div>
 

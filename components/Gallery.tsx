@@ -111,91 +111,116 @@ const Gallery: React.FC<GalleryProps> = ({ lang, onTryOn }) => {
         ))}
       </div>
 
-      {/* Product Detail Modal */}
+      {/* Product Detail Modal - Full Screen */}
       {selectedItem && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={closeItem}></div>
-          <div className="relative bg-white rounded-3xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto animate-fade-in flex flex-col md:flex-row">
-
-            <button onClick={closeItem} className="absolute top-4 right-4 z-10 bg-white/50 hover:bg-white p-2 rounded-full transition-colors">
-              <i className="fa-solid fa-xmark text-xl text-gray-800"></i>
+        <div className="fixed inset-0 z-[60] flex items-center justify-center animate-fade-in overflow-hidden">
+          <div className="absolute inset-0 bg-white z-0" onClick={closeItem}></div>
+          
+          <div className="relative bg-white w-full h-full md:h-screen overflow-y-auto z-10 flex flex-col md:flex-row">
+            
+            {/* Close Button - More prominent for full screen */}
+            <button 
+              onClick={closeItem} 
+              className="fixed top-6 right-6 z-50 bg-gray-100 hover:bg-gray-200 p-4 rounded-full transition-all shadow-lg active:scale-95"
+            >
+              <i className="fa-solid fa-xmark text-2xl text-gray-800"></i>
             </button>
 
-            {/* Left: Product Image */}
-            <div className="w-full md:w-1/2 p-4 md:p-8 bg-gray-50/50 flex items-center justify-center">
-              <div className="aspect-[3/4] w-full rounded-2xl overflow-hidden bg-white shadow-xl relative">
-                <img src={activeImage || selectedItem.image} alt={selectedItem.title} className="w-full h-full object-cover" />
-              </div>
+            {/* Left: Product Image - Full height on desktop */}
+            <div className="w-full md:w-3/5 h-[60vh] md:h-full bg-gray-50 flex items-center justify-center relative overflow-hidden group/modal-img">
+              <img 
+                src={activeImage || selectedItem.image} 
+                alt={selectedItem.title} 
+                className="w-full h-full object-cover md:object-contain bg-white" 
+              />
+              <div className="absolute inset-0 bg-black/5 opacity-0 group-hover/modal-img:opacity-100 transition-opacity pointer-events-none"></div>
             </div>
 
-            {/* Right: Selection Area */}
-            <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-              <div className="mb-10 text-center md:text-left">
-                <h2 className="text-3xl font-serif font-bold text-gray-900 leading-tight mb-2">{selectedItem.title}</h2>
-                <div className="h-1 w-12 bg-brand-600 rounded-full mx-auto md:mx-0"></div>
-              </div>
-
-              {/* Sizes */}
-              <div className="mb-8">
-                <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">
-                  Choisir Taille
-                </h4>
-                <div className="flex flex-wrap gap-3">
-                  {selectedItem.sizes.map(size => (
-                    <button
-                      key={size}
-                      onClick={() => setActiveSize(size)}
-                      className={`w-14 h-14 border-2 rounded-2xl flex items-center justify-center text-base font-bold transition-all
-                            ${activeSize === size
-                          ? 'border-brand-600 bg-brand-50 text-brand-700 shadow-md scale-105'
-                          : 'border-gray-100 text-gray-400 hover:border-brand-200 hover:text-brand-600 bg-white'}
-                        `}
-                    >
-                      {size}
-                    </button>
-                  ))}
+            {/* Right: Selection Area - Centered content */}
+            <div className="w-full md:w-2/5 p-8 md:p-16 flex flex-col min-h-full">
+              <div className="max-w-xl mx-auto w-full flex flex-col h-full justify-center">
+                <div className="mb-10">
+                  <div className="flex items-center gap-3 mb-4">
+                    <img src={selectedItem.partnerLogo} alt={selectedItem.partnerName} className="w-8 h-8 rounded-full border border-gray-100 shadow-sm" />
+                    <span className="text-sm font-bold text-gray-400 uppercase tracking-widest">{selectedItem.partnerName}</span>
+                  </div>
+                  <h2 className="text-3xl md:text-5xl font-serif font-bold text-gray-900 leading-tight mb-6">{selectedItem.title}</h2>
+                  <div className="text-3xl text-brand-700 font-bold mb-8">{selectedItem.price}</div>
+                  <div className="h-1 w-20 bg-brand-600 rounded-full"></div>
                 </div>
-              </div>
 
-              {/* Colors */}
-              <div className="mb-12">
-                <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">
-                  Couleurs Disponibles
-                </h4>
-                <div className="flex gap-4">
-                  {selectedItem.colors.map(color => (
-                    <button
-                      key={color}
-                      onClick={() => setActiveColor(color)}
-                      className={`w-12 h-12 rounded-2xl border-2 shadow-sm transition-all relative
-                            ${activeColor === color
-                          ? 'border-brand-600 ring-4 ring-brand-50 scale-110 shadow-lg'
-                          : 'border-white hover:scale-110'}
-                         `}
-                      style={{ backgroundColor: color }}
-                      title={color}
-                    >
-                      {activeColor === color && (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-2 h-2 bg-white rounded-full shadow-sm"></div>
-                        </div>
-                      )}
-                    </button>
-                  ))}
+                <div className="prose prose-lg text-gray-600 mb-10 leading-relaxed">
+                  <p>{selectedItem.description}</p>
                 </div>
-              </div>
 
-              {/* Final Action */}
-              <div className="mt-4">
-                <button
-                  onClick={handleVirtualTryOnClick}
-                  className="w-full bg-brand-600 text-white py-5 rounded-[1.5rem] text-lg font-bold shadow-2xl hover:bg-brand-700 transition-all flex items-center justify-center gap-4 hover:-translate-y-1 active:scale-[0.98]"
-                >
-                  Essai Virtuel
-                </button>
+                {/* Sizes */}
+                <div className="mb-10">
+                  <div className="flex justify-between items-center mb-4">
+                    <h4 className="text-xs font-bold text-gray-900 uppercase tracking-widest">
+                      Select Size
+                    </h4>
+                    <button className="text-xs text-brand-600 font-bold hover:underline">Size Guide</button>
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                    {selectedItem.sizes.map(size => (
+                      <button
+                        key={size}
+                        onClick={() => setActiveSize(size)}
+                        className={`w-14 h-14 border-2 rounded-2xl flex items-center justify-center text-base font-bold transition-all
+                              ${activeSize === size
+                            ? 'border-brand-600 bg-brand-600 text-white shadow-lg scale-105'
+                            : 'border-gray-100 text-gray-400 hover:border-brand-200 hover:text-brand-600 bg-white'}
+                          `}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Colors */}
+                <div className="mb-12">
+                  <h4 className="text-xs font-bold text-gray-900 uppercase tracking-widest mb-4">
+                    Available Colors
+                  </h4>
+                  <div className="flex gap-4">
+                    {selectedItem.colors.map(color => (
+                      <button
+                        key={color}
+                        onClick={() => setActiveColor(color)}
+                        className={`w-12 h-12 rounded-2xl border-2 shadow-sm transition-all relative
+                              ${activeColor === color
+                            ? 'border-brand-600 ring-4 ring-brand-50 scale-110 shadow-lg'
+                            : 'border-white hover:scale-110'}
+                           `}
+                        style={{ backgroundColor: color }}
+                        title={color}
+                      >
+                        {activeColor === color && (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <i className="fa-solid fa-check text-white text-xs drop-shadow-md"></i>
+                          </div>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Final Action */}
+                <div className="mt-auto pt-8">
+                  <button
+                    onClick={handleVirtualTryOnClick}
+                    className="w-full bg-brand-600 text-white py-6 rounded-2xl text-xl font-bold shadow-2xl hover:bg-brand-700 transition-all flex items-center justify-center gap-4 hover:-translate-y-1 active:scale-[0.98]"
+                  >
+                    <i className="fa-solid fa-wand-magic-sparkles"></i>
+                    Start Virtual Try-On
+                  </button>
+                  <p className="text-center text-gray-400 text-xs mt-6">
+                    <i className="fa-solid fa-shield-halved mr-1"></i> Secure data processing & 24h photo deletion
+                  </p>
+                </div>
               </div>
             </div>
-
           </div>
         </div>
       )}
