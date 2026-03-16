@@ -119,7 +119,7 @@ const Gallery: React.FC<GalleryProps> = ({ lang, onTryOn }) => {
 
       {/* Product Detail Modal - Reduced Size */}
       {selectedItem && (
-        <div className="fixed inset-0 z-[60] flex items-start justify-center p-20">
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-20">
           <div className="absolute inset-0 bg-black/75 backdrop-blur-lg transition-opacity duration-300" onClick={closeItem}></div>
 
           <div
@@ -150,25 +150,25 @@ const Gallery: React.FC<GalleryProps> = ({ lang, onTryOn }) => {
             </div>
 
             {/* Right: Selection Area */}
-            <div className="w-full md:w-1/2 p-8 md:p-8 flex flex-col justify-center bg-slate-950">
-              <div className="absolute top-4 mb-9/5 text-center md:text-left">
-                <div className="flex items-center justify-center md:justify-start gap-1 mb-1">
-                  <img src={selectedItem.partnerLogo} alt={selectedItem.partnerName} className="w-4 h-4 rounded-full border border-white/10 shadow-sm" />
-                  <span className="text-0.5xl font-semibold uppercase tracking-[0.25em] text-emerald-300/80">
+            <div className="w-full md:w-1/2 p-8 flex flex-col justify-center bg-slate-950">
+              <div className="mb-8 text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-3 mb-2">
+                  <img src={selectedItem.partnerLogo} alt={selectedItem.partnerName} className="w-6 h-6 rounded-full border border-white/10 shadow-sm" />
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-emerald-300/80">
                     {selectedItem.partnerName}
                   </span>
                 </div>
-                <h2 className="text-0.25xl font-semibold text-slate-50 leading-tight mb-1">
+                <h2 className="text-3xl font-semibold text-slate-50 leading-tight mb-3">
                   {selectedItem.title}
                 </h2>
-                <div className="text-0.25xl text-emerald-400 font-bold mb-1">{selectedItem.price}</div>
-                <div className="absolute top-20 right-30  prose prose-sm text-slate-400 mb-1 leading-relaxed font-light">
-
+                <div className="text-2xl text-emerald-400 font-bold mb-3">{selectedItem.price}</div>
+                <div className="prose prose-sm text-slate-400 mb-4 leading-relaxed font-light">
+                  <p>{selectedItem.description}</p>
                 </div>
               </div>
 
               {/* Sizes */}
-              <div className="mb-30">
+              <div className="mb-8">
                 <h4 className=" text-[10px] font-semibold text-slate-400 uppercase tracking-[0.25em] mb-4">
                   Select Size
                 </h4>
