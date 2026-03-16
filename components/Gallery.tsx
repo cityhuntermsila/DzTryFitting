@@ -89,39 +89,29 @@ const Gallery: React.FC<GalleryProps> = ({ lang, onTryOn }) => {
         {GALLERY_ITEMS.map((item) => (
           <div
             key={item.id}
-            className="group relative bg-white rounded-xl md:rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 flex flex-col cursor-pointer"
+            className="flex-none group cursor-pointer"
             onClick={() => openItem(item)}
           >
-
-            {/* Image Container */}
-            <div className="aspect-[3/4] overflow-hidden bg-gray-100 relative">
+            <div className="aspect-[3/4] overflow-hidden relative mb-5 bg-gray-100 rounded-xl">
               <img
                 src={item.image}
                 alt={item.title}
-                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000 ease-out"
               />
-
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span className="text-white text-xs font-bold uppercase tracking-widest border border-white/50 px-4 py-2 rounded-full backdrop-blur-md">View Details</span>
+              </div>
               {/* Category Tag */}
-              <div className="absolute top-2 left-2 md:top-3 md:left-3 bg-white/90 backdrop-blur text-[10px] md:text-xs font-bold px-2 py-0.5 md:px-3 md:py-1 rounded-full shadow-sm text-gray-800 pointer-events-none">
+              <div className="absolute top-2 left-2 md:top-3 md:left-3 bg-white/90 backdrop-blur text-[10px] md:text-xs font-bold px-2 py-0.5 md:px-3 md:py-1 rounded-full shadow-sm text-gray-800 pointer-events-none z-10">
                 {item.category}
               </div>
             </div>
-
-            {/* Content */}
-            <div className="p-3 md:p-4 flex flex-col flex-1">
-              <div className="flex items-center gap-2 mb-2 md:mb-3">
-                <img src={item.partnerLogo} alt={item.partnerName} className="w-5 h-5 md:w-6 md:h-6 rounded-full border border-gray-200" />
-                <span className="text-[10px] md:text-xs font-medium text-gray-500 truncate">{item.partnerName}</span>
+            <div className="px-1 text-center md:text-left">
+              <div className="flex flex-col md:flex-row md:justify-between md:items-baseline mb-1">
+                <h4 className="font-serif text-lg text-gray-900 truncate md:pr-2">{item.title}</h4>
+                <span className="text-sm font-medium text-brand-700 whitespace-nowrap">{item.price}</span>
               </div>
-
-              <h3 className="font-serif text-sm md:text-lg text-gray-900 leading-tight mb-2 line-clamp-2 min-h-[2.5em] md:min-h-0">{item.title}</h3>
-
-              <div className="mt-auto flex flex-col md:flex-row justify-between items-start md:items-center pt-2 md:pt-3 border-t border-gray-50 gap-1 md:gap-0">
-                <span className="text-xs md:text-sm font-bold text-brand-700">{item.price}</span>
-                <div className="flex items-center text-[10px] md:text-xs text-brand-600 font-medium">
-                  <i className="fa-regular fa-heart mr-1"></i> {item.likes}
-                </div>
-              </div>
+              <p className="text-xs text-gray-500 uppercase tracking-widest">{item.partnerName}</p>
             </div>
           </div>
         ))}

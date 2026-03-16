@@ -258,31 +258,31 @@ const AboutPartners: React.FC<Props> = ({ view, lang, onTryOn }) => {
                         <h3 className="font-serif text-2xl mb-6">Gallery</h3>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
                             {partnerItems.map((item) => (
-                                <div key={item.id} className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 flex flex-col">
-                                    <div className="aspect-[3/4] overflow-hidden relative bg-gray-100">
-                                        <img src={item.image} alt={item.title} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
-                                        {/* Detail Trigger - Hidden on mobile, Flex on MD+ */}
-                                        <div
-                                            onClick={() => openItem(item)}
-                                            className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex flex-col items-center justify-center gap-2 p-4 cursor-pointer"
-                                        >
-                                            <button className="bg-white text-gray-900 px-6 py-2 rounded-full font-bold text-sm transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-lg hover:bg-gray-100">
-                                                View Details
-                                            </button>
+                                <div
+                                    key={item.id}
+                                    className="flex-none group cursor-pointer"
+                                    onClick={() => openItem(item)}
+                                >
+                                    <div className="aspect-[3/4] overflow-hidden relative mb-5 bg-gray-100 rounded-xl">
+                                        <img
+                                            src={item.image}
+                                            alt={item.title}
+                                            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000 ease-out"
+                                        />
+                                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                            <span className="text-white text-xs font-bold uppercase tracking-widest border border-white/50 px-4 py-2 rounded-full backdrop-blur-md">View Details</span>
                                         </div>
-                                        {/* Mobile Trigger Overlay */}
-                                        <div className="md:hidden absolute inset-0 z-10" onClick={() => openItem(item)}></div>
-
-                                        <div className="absolute top-2 left-2 md:top-3 md:left-3 bg-white/90 backdrop-blur px-2 py-0.5 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-bold text-gray-800 shadow-sm pointer-events-none">
+                                        {/* Category Tag */}
+                                        <div className="absolute top-2 left-2 md:top-3 md:left-3 bg-white/90 backdrop-blur px-2 py-0.5 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-bold text-gray-800 shadow-sm pointer-events-none z-10">
                                             {item.category}
                                         </div>
                                     </div>
-                                    <div className="p-3 md:p-4 flex flex-col flex-1">
-                                        <h4 className="font-serif font-bold text-gray-900 mb-1 truncate text-sm md:text-base">{item.title}</h4>
-                                        <div className="flex justify-between items-center text-xs text-gray-500 mt-auto pt-2">
-                                            <span className="text-xs md:text-sm font-bold text-brand-700">{item.price}</span>
-                                            <span className="flex items-center text-brand-600 text-[10px] md:text-xs"><i className="fa-solid fa-heart mr-1"></i> {item.likes}</span>
+                                    <div className="px-1 text-center md:text-left">
+                                        <div className="flex flex-col md:flex-row md:justify-between md:items-baseline mb-1">
+                                            <h4 className="font-serif text-lg text-gray-900 truncate md:pr-2">{item.title}</h4>
+                                            <span className="text-sm font-medium text-brand-700 whitespace-nowrap">{item.price}</span>
                                         </div>
+                                        <p className="text-xs text-gray-500 uppercase tracking-widest">{selectedPartner.name}</p>
                                     </div>
                                 </div>
                             ))}
