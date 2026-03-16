@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Language, GalleryItem, Garment } from '../types';
 import { I18N, GALLERY_ITEMS } from '../constants';
 
@@ -14,6 +14,22 @@ const Gallery: React.FC<GalleryProps> = ({ lang, onTryOn }) => {
   // Selection State
   const [activeSize, setActiveSize] = useState<string | null>(null);
   const [activeColor, setActiveColor] = useState<string | null>(null);
+  // Refs for auto-focus
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (selectedItem) {
+      document.body.style.overflow = 'hidden';
+      if (modalRef.current) {
+        modalRef.current.focus();
+      }
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedItem]);
 
   const openItem = (item: GalleryItem) => {
     setSelectedItem(item);
@@ -111,50 +127,54 @@ const Gallery: React.FC<GalleryProps> = ({ lang, onTryOn }) => {
         ))}
       </div>
 
-      {/* Product Detail Modal - Full Screen */}
+      {/* Product Detail Modal - Reduced Size */}
       {selectedItem && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center animate-fade-in overflow-hidden">
-          <div className="absolute inset-0 bg-white z-0" onClick={closeItem}></div>
-          
-          <div className="relative bg-white w-full h-full md:h-screen overflow-y-auto z-10 flex flex-col md:flex-row">
-            
-            {/* Close Button - More prominent for full screen */}
-            <button 
-              onClick={closeItem} 
-              className="fixed top-6 right-6 z-50 bg-gray-100 hover:bg-gray-200 p-4 rounded-full transition-all shadow-lg active:scale-95"
+        <div className="fixed inset-0 z-[60] flex items-start justify-center p-4 md:p-8 animate-fade-in">
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={closeItem}></div>
+
+          <div
+            ref={modalRef}
+            tabIndex={-1}
+            className="relative bg-white w-full max-w-4xl max-h-[92vh] overflow-hidden rounded-3xl shadow-2xl z-10 flex flex-col md:flex-row outline-none"
+          >
+
+            {/* Close Button */}
+            <button
+              onClick={closeItem}
+              className="absolute top-4 right-4 z-50 bg-white/80 hover:bg-white p-2 rounded-full transition-all shadow-sm active:scale-95"
             >
-              <i className="fa-solid fa-xmark text-2xl text-gray-800"></i>
+              <i className="fa-solid fa-xmark text-xl text-gray-800"></i>
             </button>
 
-            {/* Left: Product Image - Full height on desktop */}
-            <div className="w-full md:w-3/5 h-[60vh] md:h-full bg-gray-50 flex items-center justify-center relative overflow-hidden group/modal-img">
-              <img 
-                src={activeImage || selectedItem.image} 
-                alt={selectedItem.title} 
-                className="w-full h-full object-cover md:object-contain bg-white" 
+            {/* Left: Product Image */}
+            <div className="w-full md:w-1/2 h-[40vh] md:h-full bg-gray-50 flex items-center justify-center relative overflow-hidden group/modal-img">
+              <img
+                src={activeImage || selectedItem.image}
+                alt={selectedItem.title}
+                className="w-full h-full object-cover md:object-contain bg-white"
               />
               <div className="absolute inset-0 bg-black/5 opacity-0 group-hover/modal-img:opacity-100 transition-opacity pointer-events-none"></div>
             </div>
 
-            {/* Right: Selection Area - Centered content */}
-            <div className="w-full md:w-2/5 p-8 md:p-16 flex flex-col min-h-full">
-              <div className="max-w-xl mx-auto w-full flex flex-col h-full justify-center">
-                <div className="mb-10">
-                  <div className="flex items-center gap-3 mb-4">
+            {/* Right: Selection Area - Scrolled if needed */}
+            <div className="w-full md:w-1/2 p-6 md:p-12 overflow-y-auto">
+              <div className="w-full flex flex-col h-full">
+                <div className="mb-3">
+                  <div className="flex items-center gap-3 mb-2">
                     <img src={selectedItem.partnerLogo} alt={selectedItem.partnerName} className="w-8 h-8 rounded-full border border-gray-100 shadow-sm" />
                     <span className="text-sm font-bold text-gray-400 uppercase tracking-widest">{selectedItem.partnerName}</span>
                   </div>
-                  <h2 className="text-3xl md:text-5xl font-serif font-bold text-gray-900 leading-tight mb-6">{selectedItem.title}</h2>
-                  <div className="text-3xl text-brand-700 font-bold mb-8">{selectedItem.price}</div>
-                  <div className="h-1 w-20 bg-brand-600 rounded-full"></div>
+                  <h2 className="text-1xl md:text-1xl font-serif font-bold text-gray-900 leading-tight mb-3">{selectedItem.title}</h2>
+                  <div className="text-1xl text-brand-700 font-bold mb-3">{selectedItem.price}</div>
+                  <div className="h-1 w-20 bg-brand-600 rounded-3/4"></div>
                 </div>
 
-                <div className="prose prose-lg text-gray-600 mb-10 leading-relaxed">
+                <div className="prose prose-lg text-gray-600 mb-4 leading-relaxed">
                   <p>{selectedItem.description}</p>
                 </div>
 
                 {/* Sizes */}
-                <div className="mb-10">
+                <div className="mb-4">
                   <div className="flex justify-between items-center mb-4">
                     <h4 className="text-xs font-bold text-gray-900 uppercase tracking-widest">
                       Select Size
