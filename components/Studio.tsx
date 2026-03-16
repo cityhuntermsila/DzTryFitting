@@ -301,28 +301,6 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
         }
     };
 
-    const handleShare = async () => {
-        const imageToShare = downloadResultImage || resultImage;
-        if (!imageToShare) return;
-
-        try {
-            const blob = dataURItoBlob(imageToShare);
-            const file = new File([blob], 'my_fitting.png', { type: 'image/png' });
-
-            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                await navigator.share({
-                    files: [file],
-                    title: 'My Traditional Fitting',
-                    text: 'Check out my traditional Algerian outfit from DZtryFitting!'
-                });
-            } else {
-                // Fallback to clipboard or just alert
-                alert("Sharing is not supported on this browser. Try long-pressing the image to save it.");
-            }
-        } catch (e) {
-            console.error("Sharing error:", e);
-        }
-    };
 
     const handleReset = () => {
         setResultImage(null);
@@ -438,13 +416,6 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
                                         >
                                             <i className="fa-solid fa-download"></i>
                                             Download
-                                        </button>
-                                        <button
-                                            onClick={handleShare}
-                                            className="bg-brand-600 text-white px-4 py-2 rounded-lg shadow-lg text-sm font-semibold hover:brand-700 flex items-center gap-2"
-                                        >
-                                            <i className="fa-solid fa-share-nodes"></i>
-                                            Share
                                         </button>
                                     </div>
                                 </div>
