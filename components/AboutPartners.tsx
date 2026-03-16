@@ -39,7 +39,7 @@ const AboutPartners: React.FC<Props> = ({ view, lang, onTryOn }) => {
       if (!selectedItem) return;
 
       if (!activeSize || !activeColor) {
-          alert(lang === 'ar' ? 'يرجى اختيار المقاس واللون' : 'Please select a size and color first');
+          alert('Please select a size and color first');
           return;
       }
 
@@ -81,7 +81,7 @@ const AboutPartners: React.FC<Props> = ({ view, lang, onTryOn }) => {
             {/* Hero / Intro */}
             <div className="max-w-4xl mx-auto px-6 py-20 text-center">
                 <span className="text-brand-600 font-bold tracking-widest uppercase text-xs mb-4 block">
-                    {lang === 'ar' ? 'من نحن' : 'About Us'}
+                    About Us
                 </span>
                 <h1 className="text-4xl md:text-6xl font-serif text-gray-900 mb-6 leading-tight">
                     The Soul of <br/>
@@ -205,8 +205,8 @@ const AboutPartners: React.FC<Props> = ({ view, lang, onTryOn }) => {
                           onClick={handleBack}
                           className="mb-8 text-gray-500 hover:text-brand-600 flex items-center gap-2 transition-colors mx-auto md:mx-0"
                       >
-                          <i className={`fa-solid ${lang === 'ar' ? 'fa-arrow-right' : 'fa-arrow-left'}`}></i>
-                          {lang === 'ar' ? 'عودة للقائمة' : 'Back to Partners'}
+                          <i className="fa-solid fa-arrow-left"></i>
+                          Back to Partners
                       </button>
                       
                       {/* Header */}
@@ -217,13 +217,11 @@ const AboutPartners: React.FC<Props> = ({ view, lang, onTryOn }) => {
                            <div className="text-center md:text-left flex-1">
                                 <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-2">{selectedPartner.name}</h2>
                                 <p className="text-gray-500 mb-4 max-w-xl">
-                                    {lang === 'ar' 
-                                        ? 'استكشف أحدث الإبداعات من ورشتنا. كل قطعة هي مزيج من التراث والابتكار.' 
-                                        : 'Explore the latest creations from our atelier. Each piece is a blend of heritage and innovation.'}
+                                    Explore the latest creations from our atelier. Each piece is a blend of heritage and innovation.
                                 </p>
                                 <div className="flex gap-4 justify-center md:justify-start">
                                     <div className="bg-brand-50 text-brand-700 px-4 py-1 rounded-full text-sm font-bold">
-                                        {partnerItems.length} {lang === 'ar' ? 'تصاميم' : 'Designs'}
+                                        {partnerItems.length} Designs
                                     </div>
                                     <div className="bg-gray-100 text-gray-600 px-4 py-1 rounded-full text-sm font-bold">
                                         Verified Artisan <i className="fa-solid fa-certificate text-blue-500 ml-1"></i>
@@ -235,13 +233,13 @@ const AboutPartners: React.FC<Props> = ({ view, lang, onTryOn }) => {
                                     onClick={() => setActionType('booking')}
                                     className="px-8 py-3 bg-brand-600 text-white rounded-xl font-bold shadow-lg hover:bg-brand-700 transition-all hover:-translate-y-1"
                                 >
-                                    {lang === 'ar' ? 'حجز موعد' : 'Book Appointment'}
+                                    Book Appointment
                                 </button>
                            </div>
                       </div>
 
                       {/* Grid - 2 columns on mobile, 3 on tablet, 4 on desktop */}
-                      <h3 className="font-serif text-2xl mb-6">{lang === 'ar' ? 'المعرض' : 'Gallery'}</h3>
+                      <h3 className="font-serif text-2xl mb-6">Gallery</h3>
                       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
                           {partnerItems.map((item) => (
                               <div key={item.id} className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 flex flex-col">
@@ -253,7 +251,7 @@ const AboutPartners: React.FC<Props> = ({ view, lang, onTryOn }) => {
                                         className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex flex-col items-center justify-center gap-2 p-4 cursor-pointer"
                                       >
                                           <button className="bg-white text-gray-900 px-6 py-2 rounded-full font-bold text-sm transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-lg hover:bg-gray-100">
-                                              {lang === 'ar' ? 'التفاصيل' : 'View Details'}
+                                              View Details
                                           </button>
                                       </div>
                                       {/* Mobile Trigger Overlay */}
@@ -323,7 +321,7 @@ const AboutPartners: React.FC<Props> = ({ view, lang, onTryOn }) => {
                               {/* Sizes */}
                               <div className="mb-6">
                                 <h4 className="text-xs font-bold text-gray-900 uppercase tracking-widest mb-3">
-                                    {lang === 'ar' ? 'المقاسات' : 'Available Sizes'}
+                                    Available Sizes
                                 </h4>
                                 <div className="flex flex-wrap gap-2">
                                     {selectedItem.sizes.map(size => (
@@ -345,7 +343,7 @@ const AboutPartners: React.FC<Props> = ({ view, lang, onTryOn }) => {
                               {/* Colors */}
                               <div className="mb-8">
                                 <h4 className="text-xs font-bold text-gray-900 uppercase tracking-widest mb-3">
-                                    {lang === 'ar' ? 'الألوان' : 'Colors'} ({selectedItem.colors.length})
+                                    Colors ({selectedItem.colors.length})
                                 </h4>
                                 <div className="flex gap-3">
                                     {selectedItem.colors.map(color => (
@@ -371,10 +369,10 @@ const AboutPartners: React.FC<Props> = ({ view, lang, onTryOn }) => {
                                     className="w-full bg-brand-600 text-white py-4 rounded-xl font-bold shadow-lg hover:bg-brand-700 transition-all flex items-center justify-center gap-2"
                                 >
                                     <i className="fa-solid fa-wand-magic-sparkles"></i>
-                                    {lang === 'ar' ? 'تجربة افتراضية' : 'Virtual Try-On'}
+                                    Virtual Try-On
                                 </button>
                                 <button className="w-full border border-gray-200 text-gray-900 py-4 rounded-xl font-bold hover:bg-gray-50 transition-all">
-                                    {lang === 'ar' ? 'إضافة للسلة' : 'Add to Cart'}
+                                    Add to Cart
                                 </button>
                               </div>
                             </div>
@@ -392,8 +390,8 @@ const AboutPartners: React.FC<Props> = ({ view, lang, onTryOn }) => {
                           onClick={handleBack}
                           className="mb-8 text-gray-500 hover:text-brand-600 flex items-center gap-2 transition-colors mx-auto md:mx-0"
                       >
-                          <i className={`fa-solid ${lang === 'ar' ? 'fa-arrow-right' : 'fa-arrow-left'}`}></i>
-                          {lang === 'ar' ? 'عودة للقائمة' : 'Back to Partners'}
+                          <i className="fa-solid fa-arrow-left"></i>
+                          Back to Partners
                       </button>
 
                       {showSuccess ? (
@@ -453,11 +451,9 @@ const AboutPartners: React.FC<Props> = ({ view, lang, onTryOn }) => {
       // List View
       return (
           <div className="max-w-6xl mx-auto p-8 animate-fade-in">
-              <h2 className="text-4xl font-serif text-center mb-4">{lang === 'ar' ? 'شركاؤنا' : 'Our Artisans'}</h2>
+              <h2 className="text-4xl font-serif text-center mb-4">Our Artisans</h2>
               <p className="text-center text-gray-500 mb-16 max-w-2xl mx-auto">
-                  {lang === 'ar' 
-                    ? 'تعاون مع سادة الخيط والإبرة لتصميم زي أحلامك.'
-                    : 'Collaborating with the masters of thread and needle. Select a partner to book a styling consultation.'}
+                  Collaborating with the masters of thread and needle. Select a partner to book a styling consultation.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -474,13 +470,13 @@ const AboutPartners: React.FC<Props> = ({ view, lang, onTryOn }) => {
                                 onClick={() => { setSelectedPartner(p); setActionType('collection'); }}
                                 className="flex-1 py-2 px-4 border border-gray-200 text-gray-600 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors"
                             >
-                                {lang === 'ar' ? 'المجموعة' : 'Collection'}
+                                Collection
                             </button>
                             <button 
                                 onClick={() => { setSelectedPartner(p); setActionType('booking'); }}
                                 className="flex-1 py-2 px-4 bg-brand-600 text-white rounded-lg text-sm font-semibold hover:bg-brand-700 transition-colors shadow-sm"
                             >
-                                {lang === 'ar' ? 'حجز موعد' : 'Book Appointment'}
+                                Book Appointment
                             </button>
                           </div>
                       </div>

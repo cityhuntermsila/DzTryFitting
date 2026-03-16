@@ -33,7 +33,7 @@ const Gallery: React.FC<GalleryProps> = ({ lang, onTryOn }) => {
     if (!selectedItem) return;
 
     if (!activeSize || !activeColor) {
-      alert(lang === 'ar' ? 'يرجى اختيار المقاس واللون' : 'Please select a size and color first');
+      alert('Please select a size and color first');
       return;
     }
 
@@ -60,13 +60,11 @@ const Gallery: React.FC<GalleryProps> = ({ lang, onTryOn }) => {
   return (
     <div className="max-w-7xl mx-auto p-4 md:p-8 animate-fade-in relative">
       <div className="text-center mb-8 md:mb-12 mt-4">
-        <h2 className={`text-3xl md:text-4xl font-bold text-gray-900 mb-4 ${lang === 'ar' ? 'font-arabic' : 'font-serif'}`}>
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 font-serif">
           {I18N.gallery[lang]}
         </h2>
         <p className="text-gray-500 max-w-2xl mx-auto text-sm md:text-base">
-          {lang === 'ar'
-            ? 'مجموعة حصرية من إبداعات شركائنا الحرفيين. كل قطعة تحكي قصة أصالة وتاريخ.'
-            : 'An exclusive collection from our artisan partners. Each piece tells a story of authenticity and history.'}
+          An exclusive collection from our artisan partners. Each piece tells a story of authenticity and history.
         </p>
       </div>
 
@@ -140,7 +138,7 @@ const Gallery: React.FC<GalleryProps> = ({ lang, onTryOn }) => {
               {/* Sizes */}
               <div className="mb-8">
                 <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">
-                  {lang === 'ar' ? 'المقاسات' : 'Choisir Taille'}
+                  Choisir Taille
                 </h4>
                 <div className="flex flex-wrap gap-3">
                   {selectedItem.sizes.map(size => (
@@ -162,7 +160,7 @@ const Gallery: React.FC<GalleryProps> = ({ lang, onTryOn }) => {
               {/* Colors */}
               <div className="mb-12">
                 <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">
-                  {lang === 'ar' ? 'الألوان' : 'Couleurs Disponibles'}
+                  Couleurs Disponibles
                 </h4>
                 <div className="flex gap-4">
                   {selectedItem.colors.map(color => (
@@ -193,7 +191,7 @@ const Gallery: React.FC<GalleryProps> = ({ lang, onTryOn }) => {
                   onClick={handleVirtualTryOnClick}
                   className="w-full bg-brand-600 text-white py-5 rounded-[1.5rem] text-lg font-bold shadow-2xl hover:bg-brand-700 transition-all flex items-center justify-center gap-4 hover:-translate-y-1 active:scale-[0.98]"
                 >
-                  {lang === 'ar' ? 'تجربة افتراضية' : 'Essai Virtuel'}
+                  Essai Virtuel
                 </button>
               </div>
             </div>

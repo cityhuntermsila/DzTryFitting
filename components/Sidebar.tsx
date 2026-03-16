@@ -6,12 +6,11 @@ interface SidebarProps {
   currentView: ViewState;
   setView: (view: ViewState) => void;
   lang: Language;
-  setLang: (lang: Language) => void;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, lang, setLang, isOpen, setIsOpen }) => {
+const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, lang, isOpen, setIsOpen }) => {
   
   const menuItems = [
     { view: ViewState.DASHBOARD, icon: 'fa-home', label: I18N.dashboard[lang] },
@@ -22,8 +21,6 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, lang, setLang, 
     { view: ViewState.SECURITY, icon: 'fa-shield-halved', label: I18N.security[lang] },
     { view: ViewState.ABOUT, icon: 'fa-scroll', label: I18N.about[lang] },
   ];
-
-  const isRtl = lang === 'ar';
 
   return (
     <>
@@ -42,23 +39,20 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, lang, setLang, 
           fixed inset-y-0 z-50 w-64 bg-white/95 backdrop-blur-xl border-gray-100 shadow-2xl transform transition-transform duration-500 ease-out
           
           /* Positioning based on Language */
-          ${isRtl ? 'right-0 border-l' : 'left-0 border-r'}
+          left-0 border-r
 
           /* MOBILE BEHAVIOR (Controlled by button) */
-          ${isOpen ? 'translate-x-0' : (isRtl ? 'translate-x-full' : '-translate-x-full')}
+          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
 
           /* DESKTOP BEHAVIOR (Controlled by Hover) */
           /* Default Desktop: Hide but leave 12px visible as a trigger */
-          ${isRtl 
-             ? 'lg:translate-x-[calc(100%-12px)] lg:hover:translate-x-0' 
-             : 'lg:-translate-x-[calc(100%-12px)] lg:hover:translate-x-0'
-          }
+          lg:-translate-x-[calc(100%-12px)] lg:hover:translate-x-0
         `}
       >
         <div className="flex flex-col h-full relative group">
           
           {/* Visual Handle / Hint Strip */}
-          <div className={`absolute inset-y-0 w-1 bg-gray-200 group-hover:bg-brand-500 transition-colors duration-300 top-1/2 -translate-y-1/2 h-24 rounded-full my-auto ${isRtl ? 'left-2' : 'right-2'} lg:block hidden opacity-50`}></div>
+          <div className={`absolute inset-y-0 w-1 bg-gray-200 group-hover:bg-brand-500 transition-colors duration-300 top-1/2 -translate-y-1/2 h-24 rounded-full my-auto right-2 lg:block hidden opacity-50`}></div>
 
           {/* Logo Area */}
           <div className="h-24 flex items-center justify-center border-b border-gray-50 shrink-0">
@@ -82,26 +76,22 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, lang, setLang, 
                     : 'text-gray-500 hover:bg-gray-50 hover:text-brand-600'}
                 `}
               >
-                <i className={`fa-solid ${item.icon} w-6 ${isRtl ? 'ml-3' : 'mr-3'} text-lg transition-transform group-hover/item:scale-110`}></i>
-                <span className={`font-medium tracking-wide ${isRtl ? 'font-arabic' : 'font-sans'}`}>{item.label}</span>
+                <i className={`fa-solid ${item.icon} w-6 mr-3 text-lg transition-transform group-hover/item:scale-110`}></i>
+                <span className="font-medium tracking-wide font-sans">{item.label}</span>
                 
                 {/* Active Indicator */}
                 {currentView === item.view && (
-                    <div className={`absolute top-0 bottom-0 w-1 bg-brand-600 ${isRtl ? 'left-0' : 'right-0'}`}></div>
+                    <div className="absolute top-0 bottom-0 w-1 bg-brand-600 right-0"></div>
                 )}
               </button>
             ))}
           </nav>
 
-          {/* Footer / Language Switch */}
+          {/* Footer Area */}
           <div className="p-6 border-t border-gray-50 shrink-0 bg-gray-50/50">
-             <button 
-                onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
-                className="w-full flex items-center justify-center px-4 py-3 bg-white border border-gray-200 rounded-xl hover:border-brand-300 hover:shadow-md text-sm font-bold transition-all text-gray-700 hover:text-brand-600"
-             >
-                <i className="fa-solid fa-globe mx-2 text-accent-500"></i>
-                {lang === 'en' ? 'العربية' : 'English'}
-             </button>
+             <div className="text-center text-xs text-gray-400">
+               DZtryFitting v1.0
+             </div>
           </div>
         </div>
       </aside>

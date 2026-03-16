@@ -1,0 +1,13 @@
+{
+  "appId": "com.dztryfitting.app",
+  "appName": "dztryfitting1",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

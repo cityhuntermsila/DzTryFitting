@@ -8,7 +8,7 @@ export enum ViewState {
   SECURITY = 'SECURITY',
 }
 
-export type Language = 'en' | 'ar';
+export type Language = 'en';
 
 export interface Garment {
   id: string;
@@ -68,6 +68,5 @@ export interface GalleryItem {
 export interface Translation {
   [key: string]: {
     en: string;
-    ar: string;
   };
 }

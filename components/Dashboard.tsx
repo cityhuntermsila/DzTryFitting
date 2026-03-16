@@ -32,7 +32,7 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
 
             {/* Notification Bar (bottom of hero) */}
             <div className="bg-[#881337] text-white text-[10px] md:text-xs py-2.5 text-center tracking-[0.2em] font-bold uppercase z-10 relative">
-                {lang === 'ar' ? 'توصيل لـ 69 ولاية • دفع آمن • جودة أصلية' : 'DELIVERY 69 WILAYAS • SECURE PAYMENT • AUTHENTIC QUALITY'}
+                DELIVERY 69 WILAYAS • SECURE PAYMENT • AUTHENTIC QUALITY
             </div>
 
             {/* New Call to Action Section */}
@@ -48,19 +48,17 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                         onClick={() => setView(ViewState.GALLERY)}
                         className="bg-[#111827] backdrop-blur-sm border border-gray-900 text-white hover:bg-white hover:text-[#111827] hover:border-[#111827] px-16 py-4 w-full sm:w-auto font-serif font-bold text-xs sm:text-sm tracking-widest uppercase transition-all duration-300 shadow-lg text-center"
                     >
-                        {lang === 'ar' ? 'اكتشف التراث' : 'Explore Heritage'}
+                        Explore Heritage
                     </button>
                 </div>
 
                 <div className="text-center max-w-3xl">
-                    <h1 className={`text-4xl md:text-5xl font-serif mb-4 leading-[1.1] text-gray-900 ${lang === 'ar' ? 'font-arabic' : ''}`}>
+                    <h1 className="text-4xl md:text-5xl font-serif mb-4 leading-[1.1] text-gray-900">
                         Embrace Your <span className="italic text-[#e11d48] font-serif">Roots.</span>
                     </h1>
 
-                    <p className={`text-gray-600 text-sm md:text-base leading-relaxed font-light ${lang === 'ar' ? 'font-arabic' : 'font-sans'}`}>
-                        {lang === 'ar'
-                            ? 'اكتشف غرفة القياس الافتراضية المخصصة للأزياء التقليدية الجزائرية. من الكاراكو الفخم إلى البلوزة الأنيقة، شاهد التاريخ عليك.'
-                            : 'Experience the ultimate virtual fitting room dedicated to Algerian traditional attire. From the majestic Karakou to the elegant Blouza, visualize history on yourself.'}
+                    <p className="text-gray-600 text-sm md:text-base leading-relaxed font-light font-sans">
+                        Experience the ultimate virtual fitting room dedicated to Algerian traditional attire. From the majestic Karakou to the elegant Blouza, visualize history on yourself.
                     </p>
                 </div>
             </div>
@@ -70,8 +68,8 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                 <div className="container mx-auto px-6 mb-12 flex flex-col md:flex-row justify-between items-end gap-4">
                     <div>
                         <span className="text-brand-600 text-xs font-bold tracking-widest uppercase block mb-2">Curated Selection</span>
-                        <h3 className={`text-3xl md:text-1xl font-serif text-gray-900 ${lang === 'ar' ? 'font-arabic' : ''}`}>
-                            {lang === 'ar' ? 'مجموعات أيقونية' : 'Iconic Collections'}
+                        <h3 className="text-3xl md:text-1xl font-serif text-gray-900">
+                            Iconic Collections
                         </h3>
                     </div>
 
@@ -79,8 +77,8 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                         onClick={() => setView(ViewState.GALLERY)}
                         className="hidden md:flex items-center gap-2 text-sm font-semibold text-gray-900 hover:text-brand-600 transition-colors uppercase tracking-wider pb-1 border-b border-gray-200 hover:border-brand-600"
                     >
-                        {lang === 'ar' ? 'عرض الكل' : 'View All'}
-                        <i className={`fa-solid ${lang === 'ar' ? 'fa-arrow-left' : 'fa-arrow-right'}`}></i>
+                        View All
+                        <i className="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
 
@@ -124,7 +122,7 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                         </div>
                         <div>
                             <span className="text-accent-600 text-[10px] font-bold tracking-[0.2em] uppercase block">Exclusivité</span>
-                            <h3 className={`text-3xl md:text-4xl font-serif text-gray-900 ${lang === 'ar' ? 'font-arabic' : ''}`}>
+                            <h3 className="text-3xl md:text-4xl font-serif text-gray-900 font-serif">
                                 {I18N.modern_collection[lang]}
                             </h3>
                             <p className="text-xs text-gray-400 mt-1 italic">Par Maison L'Algérienne Moderne</p>
@@ -170,18 +168,18 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="text-center mb-20">
                         <span className="text-accent-600 font-bold tracking-widest uppercase text-xs mb-4 block">
-                            {lang === 'ar' ? 'كيف يعمل' : 'How It Works'}
+                            How It Works
                         </span>
-                        <h3 className={`text-4xl md:text-5xl font-serif text-gray-900 mb-8 ${lang === 'ar' ? 'font-arabic' : ''}`}>
-                            {lang === 'ar' ? 'مسار العميل' : 'Your Journey to Elegance'}
+                        <h3 className="text-4xl md:text-5xl font-serif text-gray-900 mb-8 font-serif">
+                            Your Journey to Elegance
                         </h3>
 
                         <div className="hidden md:inline-flex items-center justify-center gap-6 text-sm tracking-widest uppercase text-gray-500 font-medium bg-white/80 px-8 py-3 rounded-full shadow-sm border border-gray-100 backdrop-blur-sm">
-                            <span className="text-brand-800 font-bold">{lang === 'ar' ? '١. أكتشف' : '1. Discover'}</span>
+                            <span className="text-brand-800 font-bold">1. Discover</span>
                             <div className="w-12 h-px bg-gray-200"></div>
-                            <span className="text-brand-800 font-bold">{lang === 'ar' ? '٢. أجرب' : '2. Try On'}</span>
+                            <span className="text-brand-800 font-bold">2. Try On</span>
                             <div className="w-12 h-px bg-gray-200"></div>
-                            <span className="text-brand-800 font-bold">{lang === 'ar' ? '٣. أشتري' : '3. Acquire'}</span>
+                            <span className="text-brand-800 font-bold">3. Acquire</span>
                         </div>
                     </div>
 
@@ -195,11 +193,11 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                                 <div className="w-16 h-16 mx-auto bg-brand-50 rounded-full flex items-center justify-center text-brand-600 mb-6 group-hover:bg-brand-600 group-hover:text-white transition-all duration-300 shadow-sm">
                                     <i className="fa-solid fa-magnifying-glass text-2xl"></i>
                                 </div>
-                                <h4 className={`text-2xl font-serif font-bold text-gray-900 mb-4 ${lang === 'ar' ? 'font-arabic' : ''}`}>
-                                    {lang === 'ar' ? 'الاستكشاف' : 'Discovery'}
+                                <h4 className="text-2xl font-serif font-bold text-gray-900 mb-4 font-serif">
+                                    Discovery
                                 </h4>
                                 <p className="text-gray-500 text-sm leading-relaxed mb-6">
-                                    {lang === 'ar' ? 'تصفح مجموعات حصرية من أفضل الحرفيين في الجزائر.' : 'Explore exclusive collections from Algeria\'s finest artisans.'}
+                                    Explore exclusive collections from Algeria's finest artisans.
                                 </p>
                             </div>
                         </div>
@@ -213,11 +211,11 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                                 <div className="w-20 h-20 mx-auto bg-gradient-to-br from-accent-400 to-accent-600 rounded-full flex items-center justify-center text-white mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300 ring-4 ring-accent-50">
                                     <i className="fa-solid fa-wand-magic-sparkles text-3xl"></i>
                                 </div>
-                                <h4 className={`text-3xl font-serif font-bold text-accent-600 mb-4 ${lang === 'ar' ? 'font-arabic' : ''}`}>
-                                    {lang === 'ar' ? 'القياس الافتراضي' : 'Virtual Try-On'}
+                                <h4 className="text-3xl font-serif font-bold text-accent-600 mb-4 font-serif">
+                                    Virtual Try-On
                                 </h4>
                                 <p className="text-gray-600 text-sm leading-relaxed mb-6">
-                                    {lang === 'ar' ? 'جرب الأزياء على صورتك باستخدام تقنية الذكاء الاصطناعي المتطورة.' : 'See exactly how the garment looks on you using our AI technology.'}
+                                    See exactly how the garment looks on you using our AI technology.
                                 </p>
                             </div>
                         </div>
@@ -231,11 +229,11 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                                 <div className="w-16 h-16 mx-auto bg-brand-50 rounded-full flex items-center justify-center text-brand-600 mb-6 group-hover:bg-brand-600 group-hover:text-white transition-all duration-300 shadow-sm">
                                     <i className="fa-solid fa-bag-shopping text-2xl"></i>
                                 </div>
-                                <h4 className={`text-2xl font-serif font-bold text-gray-900 mb-4 ${lang === 'ar' ? 'font-arabic' : ''}`}>
-                                    {lang === 'ar' ? 'الشراء' : 'Acquire'}
+                                <h4 className="text-2xl font-serif font-bold text-gray-900 mb-4 font-serif">
+                                    Acquire
                                 </h4>
                                 <p className="text-gray-500 text-sm leading-relaxed mb-6">
-                                    {lang === 'ar' ? 'اطلب الزي مفصلاً على مقاسك مباشرة من الحرفي.' : 'Order the piece custom-tailored directly from the artisan.'}
+                                    Order the piece custom-tailored directly from the artisan.
                                 </p>
                             </div>
                         </div>
@@ -251,15 +249,13 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                     <div className="flex flex-col md:flex-row gap-16 items-center">
                         <div className="w-full md:w-1/2">
                             <span className="text-brand-600 text-xs font-bold tracking-widest uppercase block mb-3">
-                                {lang === 'ar' ? 'من الشاشة إلى الواقع' : 'From Screen to Reality'}
+                                From Screen to Reality
                             </span>
-                            <h3 className={`text-3xl md:text-5xl font-serif text-gray-900 mb-6 leading-tight ${lang === 'ar' ? 'font-arabic' : ''}`}>
-                                {lang === 'ar' ? 'كيف تقتني هذه التحف؟' : 'Acquire Authentic Pieces'}
+                            <h3 className="text-3xl md:text-5xl font-serif text-gray-900 mb-6 leading-tight font-serif">
+                                Acquire Authentic Pieces
                             </h3>
                             <p className="text-gray-500 text-lg mb-8 leading-relaxed font-light">
-                                {lang === 'ar'
-                                    ? 'DZtryFitting ليس مجرد تطبيق، بل هو جسر يربطك بأمهر الحرفيين في الجزائر.'
-                                    : 'DZtryFitting connects you directly with Algeria\'s master artisans.'}
+                                Connect with the creators of Algerian beauty. Our platform facilitates direct engagement with accredited artisans for a personalized experience.
                             </p>
 
                             <div className="space-y-6">
@@ -268,8 +264,8 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                                         <i className="fa-solid fa-check-double text-xl"></i>
                                     </div>
                                     <div>
-                                        <h5 className="font-bold text-gray-900 mb-1">{lang === 'ar' ? '١. تأكيد المظهر' : '1. Validate the Look'}</h5>
-                                        <p className="text-sm text-gray-500">{lang === 'ar' ? 'تأكد أن اللون والقصة تناسبك تماماً عبر الاستوديو.' : 'Ensure the color and cut suit you perfectly via the Virtual Studio.'}</p>
+                                        <h5 className="font-bold text-gray-900 mb-1">1. Validate the Look</h5>
+                                        <p className="text-sm text-gray-500">Ensure the color and cut suit you perfectly via the Virtual Studio.</p>
                                     </div>
                                 </div>
                             </div>
@@ -278,8 +274,8 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                                 onClick={() => setView(ViewState.PARTNERS)}
                                 className="mt-10 px-8 py-4 bg-gray-900 text-white rounded-full font-bold shadow-xl hover:bg-gray-800 transition-all hover:translate-x-1 flex items-center gap-3 w-fit"
                             >
-                                {lang === 'ar' ? 'تصفح قائمة الحرفيين' : 'Browse Artisans'}
-                                <i className={`fa-solid ${lang === 'ar' ? 'fa-arrow-left' : 'fa-arrow-right'}`}></i>
+                                Browse Artisans
+                                <i className="fa-solid fa-arrow-right"></i>
                             </button>
                         </div>
 
@@ -311,7 +307,7 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
             <section className="bg-[#fcfbf9] py-24 border-t border-[#f0ebe0] overflow-hidden">
                 <div className="container mx-auto px-6 text-center mb-16">
                     <h3 className="font-serif text-2xl text-gray-400 mb-2 italic tracking-wider">
-                        {lang === 'ar' ? 'شركاؤنا في الحرفية' : 'Partners in Craftsmanship'}
+                        Partners in Craftsmanship
                     </h3>
                 </div>
 
@@ -335,11 +331,11 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
             {/* GUARANTEES & SECURITY */}
             <section className="py-24 bg-[#fff1f2] border-t border-brand-100 text-gray-900">
                 <div className="container mx-auto px-6 text-center">
-                    <h3 className={`text-3xl md:text-5xl font-serif text-gray-900 mb-4 ${lang === 'ar' ? 'font-arabic' : ''}`}>
+                    <h3 className="text-3xl md:text-5xl font-serif text-gray-900 mb-4 font-serif">
                         {I18N.sec_title[lang]}
                     </h3>
                     <div className="inline-block bg-white px-8 py-3 rounded-full border border-gray-200 shadow-sm mb-16">
-                        <span className={`text-gray-500 font-medium tracking-wide ${lang === 'ar' ? 'font-arabic' : 'font-sans'}`}>
+                        <span className="text-gray-500 font-medium tracking-wide font-sans">
                             {I18N.sec_subtitle[lang]}
                         </span>
                     </div>
@@ -351,7 +347,7 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                                 <div className="w-12 h-12 bg-accent-50 rounded-full flex items-center justify-center text-accent-600">
                                     <i className="fa-solid fa-lock text-xl"></i>
                                 </div>
-                                <h4 className={`text-xl font-bold text-gray-900 ${lang === 'ar' ? 'font-arabic' : ''}`}>{I18N.sec_photo_title[lang]}</h4>
+                                <h4 className="text-xl font-bold text-gray-900 font-serif">{I18N.sec_photo_title[lang]}</h4>
                             </div>
                             <ul className="space-y-4 text-gray-600 text-sm">
                                 <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-accent-500"></div>{I18N.sec_photo_1[lang]}</li>
@@ -367,7 +363,7 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                                 <div className="w-12 h-12 bg-accent-50 rounded-full flex items-center justify-center text-accent-600">
                                     <i className="fa-solid fa-user-shield text-xl"></i>
                                 </div>
-                                <h4 className={`text-xl font-bold text-gray-900 ${lang === 'ar' ? 'font-arabic' : ''}`}>{I18N.sec_privacy_title[lang]}</h4>
+                                <h4 className="text-xl font-bold text-gray-900 font-serif">{I18N.sec_privacy_title[lang]}</h4>
                             </div>
                             <ul className="space-y-4 text-gray-600 text-sm">
                                 <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-accent-500"></div>{I18N.sec_privacy_1[lang]}</li>
@@ -383,7 +379,7 @@ const Dashboard: React.FC<DashboardProps> = ({ setView, lang, onSelectGarment })
                                 <div className="w-12 h-12 bg-accent-50 rounded-full flex items-center justify-center text-accent-600">
                                     <i className="fa-solid fa-arrow-rotate-left text-xl"></i>
                                 </div>
-                                <h4 className={`text-xl font-bold text-gray-900 ${lang === 'ar' ? 'font-arabic' : ''}`}>{I18N.sec_return_title[lang]}</h4>
+                                <h4 className="text-xl font-bold text-gray-900 font-serif">{I18N.sec_return_title[lang]}</h4>
                             </div>
                             <ul className="space-y-4 text-gray-600 text-sm">
                                 <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-accent-500"></div>{I18N.sec_return_1[lang]}</li>

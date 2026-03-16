@@ -148,10 +148,10 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
                         setIsCameraActive(false);
                         setPendingImage(null);
                     } else {
-                        setValidationError(validation.reason || "Photo non conforme");
+                        setValidationError(validation.reason || "Invalid photo");
                     }
                 } catch (e) {
-                    setValidationError("Erreur technique de validation.");
+                    setValidationError("Technical validation error.");
                 } finally {
                     setIsValidating(false);
                 }
@@ -189,7 +189,7 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
                             setValidationError(validation.reason || "Photo non conforme");
                         }
                     } catch (e) {
-                        setValidationError("Erreur technique de validation.");
+                        setValidationError("Technical validation error.");
                     } finally {
                         setIsValidating(false);
                     }
@@ -260,7 +260,7 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
                 }
             }
         } catch (error) {
-            alert("Erreur de génération. Vérifiez votre clé API.");
+            alert("Generation error. Please check your API key.");
         } finally {
             setIsProcessing(false);
         }
@@ -303,18 +303,18 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
                                         </button>
                                         <div className="w-12 h-12"></div>
                                     </div>
-                                    {isValidating && <div className="absolute inset-0 bg-black/50 z-30 flex flex-col items-center justify-center text-white"><i className="fa-solid fa-circle-notch fa-spin text-4xl mb-3 text-brand-500"></i><p className="font-serif tracking-wider">Analyse de posture...</p></div>}
+                                    {isValidating && <div className="absolute inset-0 bg-black/50 z-30 flex flex-col items-center justify-center text-white"><i className="fa-solid fa-circle-notch fa-spin text-4xl mb-3 text-brand-500"></i><p className="font-serif tracking-wider">Analyzing posture...</p></div>}
                                 </div>
                             ) : (
                                 <div className={`text-center p-12 animate-fade-in ${isDragOver ? 'scale-105 transition-transform' : ''} relative`}>
-                                    {isValidating && <div className="absolute inset-0 bg-white/90 z-20 flex flex-col items-center justify-center rounded-3xl"><i className="fa-solid fa-circle-notch fa-spin text-4xl mb-3 text-brand-600"></i><p className="font-serif tracking-wider text-gray-900">Vérification de la photo...</p></div>}
+                                    {isValidating && <div className="absolute inset-0 bg-white/90 z-20 flex flex-col items-center justify-center rounded-3xl"><i className="fa-solid fa-circle-notch fa-spin text-4xl mb-3 text-brand-600"></i><p className="font-serif tracking-wider text-gray-900">Verifying photo...</p></div>}
                                     <div className={`w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 transition-colors ${isDragOver ? 'bg-white' : 'bg-brand-50'}`}><i className={`fa-solid fa-cloud-arrow-up text-3xl ${isDragOver ? 'text-brand-600' : 'text-brand-500'}`}></i></div>
                                     <h3 className="text-2xl font-serif text-gray-800 mb-2">{I18N.upload_photo[lang]}</h3>
-                                    <p className="text-gray-500 mb-8 max-w-sm mx-auto">Déposez votre photo en pied pour commencer l'essayage.</p>
+                                    <p className="text-gray-500 mb-8 max-w-sm mx-auto">Upload your full-body photo to begin the fitting.</p>
                                     <div className="flex flex-col items-center gap-6">
                                         <div className="flex justify-center gap-4">
-                                            <button onClick={() => fileInputRef.current?.click()} className="px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors shadow-lg"><i className="fa-regular fa-folder-open mr-2"></i> Choisir un fichier</button>
-                                            <button onClick={handleCamera} className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"><i className="fa-solid fa-camera mr-2"></i> Caméra</button>
+                                            <button onClick={() => fileInputRef.current?.click()} className="px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors shadow-lg"><i className="fa-regular fa-folder-open mr-2"></i> Choose file</button>
+                                            <button onClick={handleCamera} className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"><i className="fa-solid fa-camera mr-2"></i> Camera</button>
                                             <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleFileChange} />
                                         </div>
 
@@ -322,11 +322,11 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
                                             <div className="animate-fade-in bg-white border border-brand-100 p-6 rounded-2xl shadow-xl max-w-md flex flex-col gap-4">
                                                 <div className="flex items-center gap-4">
                                                     <div className="w-10 h-10 rounded-full bg-brand-50 flex items-center justify-center shrink-0"><i className="fa-solid fa-triangle-exclamation text-brand-600"></i></div>
-                                                    <div className="text-left"><p className="text-xs font-bold text-gray-400 uppercase tracking-widest">IA en doute</p><p className="text-sm font-medium text-gray-700">{validationError}</p></div>
+                                                    <div className="text-left"><p className="text-xs font-bold text-gray-400 uppercase tracking-widest">AI insight</p><p className="text-sm font-medium text-gray-700">{validationError}</p></div>
                                                 </div>
                                                 <div className="flex gap-2">
-                                                    <button onClick={() => { setValidationError(null); setPendingImage(null); }} className="flex-1 py-2 text-xs font-bold text-gray-500 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">Réessayer</button>
-                                                    <button onClick={forceUseImage} className="flex-1 py-2 text-xs font-bold text-brand-700 bg-brand-50 hover:bg-brand-100 rounded-lg transition-colors flex items-center justify-center gap-2"><i className="fa-solid fa-check-double"></i> Utiliser quand même</button>
+                                                    <button onClick={() => { setValidationError(null); setPendingImage(null); }} className="flex-1 py-2 text-xs font-bold text-gray-500 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">Retry</button>
+                                                    <button onClick={forceUseImage} className="flex-1 py-2 text-xs font-bold text-brand-700 bg-brand-50 hover:bg-brand-100 rounded-lg transition-colors flex items-center justify-center gap-2"><i className="fa-solid fa-check-double"></i> Use anyway</button>
                                                 </div>
                                             </div>
                                         )}
@@ -372,14 +372,14 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
                                             onClick={handleReset}
                                             className="bg-white/90 backdrop-blur text-gray-900 px-4 py-2 rounded-lg shadow-lg text-sm font-semibold hover:bg-white mr-2"
                                         >
-                                            Recommencer
+                                            Restart
                                         </button>
                                         <a
                                             href={downloadResultImage || resultImage}
                                             download="dz_fitting_result.png"
                                             className="bg-brand-600 text-white px-4 py-2 rounded-lg shadow-lg text-sm font-semibold hover:brand-700"
                                         >
-                                            Télécharger
+                                            Download
                                         </a>
                                     </div>
                                 </div>
@@ -396,7 +396,7 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
                                         onClick={() => setUserImage(null)}
                                         className="absolute top-4 right-4 bg-white/90 hover:bg-white text-gray-900 px-3 py-1 rounded-full text-xs shadow-md border border-gray-200"
                                     >
-                                        Changer de photo
+                                        Change photo
                                     </button>
                                 </div>
                             </div>
@@ -433,10 +433,10 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
                                         {customGarmentImage ? (
                                             <div className="relative w-full h-full flex flex-col items-center justify-center">
                                                 <div className="relative w-full h-40 mb-4"><img src={customGarmentImage} alt="Custom" className="w-full h-full object-contain rounded-lg shadow-sm" /><button onClick={() => setCustomGarmentImage(null)} className="absolute -top-2 -right-2 bg-white text-red-500 w-8 h-8 rounded-full shadow-md flex items-center justify-center hover:bg-red-50 transition-colors"><i className="fa-solid fa-trash"></i></button></div>
-                                                <p className="text-sm font-medium text-brand-700">Vêtement chargé</p>
+                                                <p className="text-sm font-medium text-brand-700">Garment loaded</p>
                                             </div>
                                         ) : (
-                                            <><div className="w-12 h-12 rounded-full flex items-center justify-center mb-3 bg-gray-100"><i className="fa-solid fa-shirt text-xl text-gray-400"></i></div><p className="text-sm font-medium text-gray-900 mb-1">Upload Garment</p><button onClick={() => garmentInputRef.current?.click()} className="px-4 py-2 bg-gray-900 text-white text-xs rounded-lg hover:bg-gray-800 transition-colors">Choisir fichier</button><input type="file" ref={garmentInputRef} className="hidden" accept="image/*" onChange={handleGarmentFileChange} /></>
+                                            <><div className="w-12 h-12 rounded-full flex items-center justify-center mb-3 bg-gray-100"><i className="fa-solid fa-shirt text-xl text-gray-400"></i></div><p className="text-sm font-medium text-gray-900 mb-1">Upload Garment</p><button onClick={() => garmentInputRef.current?.click()} className="px-4 py-2 bg-gray-900 text-white text-xs rounded-lg hover:bg-gray-800 transition-colors">Choose file</button><input type="file" ref={garmentInputRef} className="hidden" accept="image/*" onChange={handleGarmentFileChange} /></>
                                         )}
                                     </div>
                                 </div>
@@ -466,7 +466,7 @@ const Studio: React.FC<StudioProps> = ({ lang, initialGarment }) => {
                     {userImage && !resultImage && (
                         <div className="bg-gradient-to-br from-brand-600 to-brand-800 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden shrink-0">
                             <div className="mb-6">
-                                <h4 className="font-serif text-sm mb-3 opacity-90 uppercase tracking-widest">Pose de sortie</h4>
+                                <h4 className="font-serif text-sm mb-3 opacity-90 uppercase tracking-widest">Output Pose</h4>
                                 <div className="grid grid-cols-3 gap-2">
                                     {POSES.map(pose => (
                                         <button key={pose.id} onClick={() => setSelectedPose(pose)} className={`flex flex-col items-center p-2 rounded-lg border transition-all ${selectedPose.id === pose.id ? 'bg-white text-brand-700 border-white' : 'bg-brand-700/50 border-transparent text-brand-100'}`}>

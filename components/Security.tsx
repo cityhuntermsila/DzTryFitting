@@ -18,11 +18,11 @@ const Security: React.FC<SecurityProps> = ({ lang }) => {
 
         <div className="max-w-7xl mx-auto w-full relative z-10">
             <div className="text-center mb-16">
-                <h1 className={`text-4xl md:text-6xl font-serif text-gray-900 mb-6 ${lang === 'ar' ? 'font-arabic' : ''}`}>
+                <h1 className="text-4xl md:text-6xl font-serif text-gray-900 mb-6 font-serif">
                     {I18N.sec_title[lang]}
                 </h1>
                 <div className="inline-block bg-white px-8 py-3 rounded-full border border-gray-200 shadow-sm">
-                     <span className={`text-gray-500 text-lg font-medium tracking-wide ${lang === 'ar' ? 'font-arabic' : 'font-sans'}`}>
+                     <span className="text-gray-500 text-lg font-medium tracking-wide font-sans">
                         {I18N.sec_subtitle[lang]}
                      </span>
                 </div>
@@ -36,11 +36,11 @@ const Security: React.FC<SecurityProps> = ({ lang }) => {
                         <div className="w-20 h-20 bg-accent-50 rounded-full flex items-center justify-center mb-4 text-accent-600 group-hover:bg-accent-600 group-hover:text-white transition-colors duration-300">
                             <i className="fa-solid fa-lock text-3xl"></i>
                         </div>
-                        <h4 className={`text-2xl font-bold text-gray-900 ${lang === 'ar' ? 'font-arabic' : ''}`}>
+                        <h4 className="text-2xl font-bold text-gray-900 font-serif">
                             {I18N.sec_photo_title[lang]}
                         </h4>
                     </div>
-                    <ul className={`space-y-4 text-gray-600 text-base leading-relaxed ${lang === 'ar' ? 'font-arabic' : ''}`}>
+                    <ul className="space-y-4 text-gray-600 text-base leading-relaxed font-sans">
                         <li className="flex items-center gap-3">
                             <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center shrink-0">
                                 <i className="fa-solid fa-check text-green-600 text-xs"></i>
@@ -74,11 +74,11 @@ const Security: React.FC<SecurityProps> = ({ lang }) => {
                         <div className="w-20 h-20 bg-accent-50 rounded-full flex items-center justify-center mb-4 text-accent-600 group-hover:bg-accent-600 group-hover:text-white transition-colors duration-300">
                             <i className="fa-solid fa-user-shield text-3xl"></i>
                         </div>
-                        <h4 className={`text-2xl font-bold text-gray-900 ${lang === 'ar' ? 'font-arabic' : ''}`}>
+                        <h4 className="text-2xl font-bold text-gray-900 font-serif">
                             {I18N.sec_privacy_title[lang]}
                         </h4>
                     </div>
-                    <ul className={`space-y-4 text-gray-600 text-base leading-relaxed ${lang === 'ar' ? 'font-arabic' : ''}`}>
+                    <ul className="space-y-4 text-gray-600 text-base leading-relaxed font-sans">
                         <li className="flex items-center gap-3">
                             <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center shrink-0">
                                 <i className="fa-solid fa-check text-green-600 text-xs"></i>
@@ -112,11 +112,11 @@ const Security: React.FC<SecurityProps> = ({ lang }) => {
                          <div className="w-20 h-20 bg-accent-50 rounded-full flex items-center justify-center mb-4 text-accent-600 group-hover:bg-accent-600 group-hover:text-white transition-colors duration-300">
                             <i className="fa-solid fa-rotate-left text-3xl"></i>
                         </div>
-                        <h4 className={`text-2xl font-bold text-gray-900 ${lang === 'ar' ? 'font-arabic' : ''}`}>
+                        <h4 className="text-2xl font-bold text-gray-900 font-serif">
                             {I18N.sec_return_title[lang]}
                         </h4>
                     </div>
-                    <ul className={`space-y-4 text-gray-600 text-base leading-relaxed ${lang === 'ar' ? 'font-arabic' : ''}`}>
+                    <ul className="space-y-4 text-gray-600 text-base leading-relaxed font-sans">
                         <li className="flex items-center gap-3">
                             <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center shrink-0">
                                 <i className="fa-solid fa-check text-green-600 text-xs"></i>

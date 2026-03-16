@@ -11,7 +11,7 @@ import { ViewState, Language, Garment } from './types';
 
 const App: React.FC = () => {
   const [currentView, setView] = useState<ViewState>(ViewState.DASHBOARD);
-  const [lang, setLang] = useState<Language>('en');
+  const [lang] = useState<Language>('en');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [apiKey, setApiKey] = useState<string | null>(process.env.API_KEY || null);
 
@@ -59,7 +59,7 @@ const App: React.FC = () => {
 
   if (needsKey) {
     return (
-      <div className={`min-h-screen bg-slate-950 bg-[radial-gradient(circle_at_top,_#0f172a,_#020617)] text-slate-50 flex items-center justify-center px-4 ${lang === 'ar' ? 'font-arabic dir-rtl' : 'font-sans dir-ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+      <div className="min-h-screen bg-slate-950 bg-[radial-gradient(circle_at_top,_#0f172a,_#020617)] text-slate-50 flex items-center justify-center px-4 font-sans dir-ltr" dir="ltr">
         <div className="relative w-full max-w-xl">
           <div className="pointer-events-none absolute -top-24 -right-24 h-56 w-56 rounded-full bg-emerald-500/10 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-32 -left-10 h-64 w-64 rounded-full bg-sky-500/10 blur-3xl" />
@@ -87,8 +87,8 @@ const App: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen bg-slate-950 bg-[radial-gradient(circle_at_top,_#020617,_#020617_40%,_#0f172a_80%)] relative overflow-hidden ${lang === 'ar' ? 'font-arabic dir-rtl' : 'font-sans dir-ltr'}`}
-      dir={lang === 'ar' ? 'rtl' : 'ltr'}
+      className="min-h-screen bg-slate-950 bg-[radial-gradient(circle_at_top,_#020617,_#020617_40%,_#0f172a_80%)] relative overflow-hidden font-sans dir-ltr"
+      dir="ltr"
     >
       {/* Decorative background orbs */}
       <div className="pointer-events-none absolute -top-40 -right-10 h-72 w-72 rounded-full bg-emerald-500/20 blur-3xl" />
@@ -98,7 +98,6 @@ const App: React.FC = () => {
         currentView={currentView}
         setView={setView}
         lang={lang}
-        setLang={setLang}
         isOpen={isSidebarOpen}
         setIsOpen={setIsSidebarOpen}
       />
@@ -107,8 +106,7 @@ const App: React.FC = () => {
         <button
           onClick={() => setIsSidebarOpen(true)}
           className={`
-            lg:hidden fixed top-5 z-40 w-12 h-12 bg-slate-900/80 backdrop-blur-xl shadow-lg shadow-black/40 rounded-full flex items-center justify-center text-slate-100 border border-white/10 transition-all duration-200 active:scale-95 hover:bg-slate-800/90 hover:-translate-y-0.5
-            ${lang === 'ar' ? 'right-5' : 'left-5'}
+            lg:hidden fixed top-5 z-40 w-12 h-12 bg-slate-900/80 backdrop-blur-xl shadow-lg shadow-black/40 rounded-full flex items-center justify-center text-slate-100 border border-white/10 transition-all duration-200 active:scale-95 hover:bg-slate-800/90 hover:-translate-y-0.5 left-5
           `}
           aria-label="Toggle Menu"
         >
