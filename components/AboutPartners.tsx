@@ -20,22 +20,22 @@ const AboutPartners: React.FC<Props> = ({ view, lang, onTryOn }) => {
     // Selection State
     const [activeSize, setActiveSize] = useState<string | null>(null);
     const [activeColor, setActiveColor] = useState<string | null>(null);
-  // Refs for auto-focus
-  const modalRef = useRef<HTMLDivElement>(null);
+    // Refs for auto-focus
+    const modalRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (selectedItem) {
-        document.body.style.overflow = 'hidden';
-        if (modalRef.current) {
-            modalRef.current.focus();
+    useEffect(() => {
+        if (selectedItem) {
+            document.body.style.overflow = 'hidden';
+            if (modalRef.current) {
+                modalRef.current.focus();
+            }
+        } else {
+            document.body.style.overflow = 'unset';
         }
-    } else {
-        document.body.style.overflow = 'unset';
-    }
-    return () => {
-        document.body.style.overflow = 'unset';
-    };
-  }, [selectedItem]);
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [selectedItem]);
 
     const openItem = (item: GalleryItem) => {
         setSelectedItem(item);
@@ -288,114 +288,120 @@ const AboutPartners: React.FC<Props> = ({ view, lang, onTryOn }) => {
                             ))}
                         </div>
 
-                        {/* Product Detail Modal - Synchronized with Gallery */}
+                        {/* Product Detail Modal - Synchronized with App.tsx */}
                         {selectedItem && (
-                            <div className="fixed inset-0 z-[60] flex items-start justify-center p-4 md:p-8 animate-fade-in">
-                                <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={closeItem}></div>
+                            <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+                                <div className="absolute inset-0 bg-black/75 backdrop-blur-lg transition-opacity duration-300" onClick={closeItem}></div>
 
-                                <div 
+                                <div
                                     ref={modalRef}
                                     tabIndex={-1}
-                                    className="relative bg-white w-full max-w-4xl max-h-[92vh] overflow-hidden rounded-3xl shadow-2xl z-10 flex flex-col md:flex-row outline-none"
+                                    className="relative bg-slate-950/95 text-slate-50 rounded-[2.5rem] border border-white/10 shadow-[0_24px_80px_rgba(15,23,42,0.95)] w-full max-w-5xl overflow-hidden flex flex-col md:flex-row animate-fade-in max-h-[90vh] overflow-y-auto outline-none"
                                 >
-
+                                    {/* Close Button */}
                                     <button
                                         onClick={closeItem}
-                                        className="absolute top-4 right-4 z-50 bg-white/80 hover:bg-white p-2 rounded-full transition-all shadow-sm active:scale-95"
+                                        className="absolute top-6 right-6 z-20 w-10 h-10 bg-slate-900/80 hover:bg-slate-800 rounded-full flex items-center justify-center transition-all shadow-lg shadow-black/40 border border-white/10"
                                     >
-                                        <i className="fa-solid fa-xmark text-xl text-gray-800"></i>
+                                        <i className="fa-solid fa-xmark text-slate-100"></i>
                                     </button>
 
                                     {/* Left: Product Image */}
-                                    <div className="w-full md:w-1/2 h-[90vh] md:h-full bg-gray-50 flex items-center justify-center relative overflow-hidden group/modal-img">
-                                        <img src={activeImage || selectedItem.image} alt={selectedItem.title} className="w-full h-full object-contain bg-white" />
-                                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover/modal-img:opacity-100 transition-opacity pointer-events-none"></div>
-                                    </div>
-
-                                    {/* Right: Selection Area - Scrolled if needed */}
-                                    <div className="w-full md:w-1/2 p-6 md:p-12 overflow-y-auto">
-                                        <div className="w-full flex flex-col h-full">
-                                            <div className="mb-3">
-                                                <div className="flex items-center gap-3 mb-2">
-                                                    <img src={selectedItem.partnerLogo} className="w-8 h-8 rounded-full border border-gray-100 shadow-sm" />
-                                                    <span className="text-sm font-bold text-gray-400 uppercase tracking-widest">{selectedItem.partnerName}</span>
-                                                </div>
-                                                <h2 className="text-1xl md:text-1xl font-serif font-bold text-gray-900 leading-tight mb-3">{selectedItem.title}</h2>
-                                                <div className="text-1xl text-brand-700 font-bold mb-3">{selectedItem.price}</div>
-                                                <div className="h-1 w-20 bg-brand-600 rounded-3/4"></div>
-                                            </div>
-
-                                            <div className="prose prose-lg text-gray-600 mb-4 leading-relaxed font-light">
-                                                <p>{selectedItem.description}</p>
-                                            </div>
-
-                                            {/* Sizes */}
-                                            <div className="mb-4">
-                                                <div className="flex justify-between items-center mb-4">
-                                                    <h4 className="text-xs font-bold text-gray-900 uppercase tracking-widest">
-                                                        Select Size
-                                                    </h4>
-                                                    <button className="text-xs text-brand-600 font-bold hover:underline">Size Guide</button>
-                                                </div>
-                                                <div className="flex flex-wrap gap-3">
-                                                    {selectedItem.sizes.map(size => (
-                                                        <button
-                                                            key={size}
-                                                            onClick={() => setActiveSize(size)}
-                                                            className={`w-14 h-14 border-2 rounded-2xl flex items-center justify-center text-base font-bold transition-all
-                                              ${activeSize === size
-                                                                    ? 'border-brand-600 bg-brand-600 text-white shadow-lg scale-105'
-                                                                    : 'border-gray-100 text-gray-400 hover:border-brand-200 hover:text-brand-600 bg-white'}
-                                          `}
-                                                        >
-                                                            {size}
-                                                        </button>
-                                                    ))}
-                                                </div>
-                                            </div>
-
-                                            {/* Colors */}
-                                            <div className="mb-12">
-                                                <h4 className="text-xs font-bold text-gray-900 uppercase tracking-widest mb-4">
-                                                    Available Colors
-                                                </h4>
-                                                <div className="flex gap-4">
-                                                    {selectedItem.colors.map(color => (
-                                                        <button
-                                                            key={color}
-                                                            onClick={() => setActiveColor(color)}
-                                                            className={`w-12 h-12 rounded-2xl border-2 shadow-sm transition-all relative
-                                              ${activeColor === color ? 'border-brand-600 ring-4 ring-brand-50 scale-110 shadow-lg' : 'border-white hover:scale-110'}
-                                          `}
-                                                            style={{ backgroundColor: color }}
-                                                            title={color}
-                                                        >
-                                                            {activeColor === color && (
-                                                                <div className="absolute inset-0 flex items-center justify-center">
-                                                                    <i className="fa-solid fa-check text-white text-xs drop-shadow-md"></i>
-                                                                </div>
-                                                            )}
-                                                        </button>
-                                                    ))}
-                                                </div>
-                                            </div>
-
-                                            {/* Final Action */}
-                                            <div className="mt-auto pt-8">
-                                                <button
-                                                    onClick={handleVirtualTryOnClick}
-                                                    className="w-full bg-brand-600 text-white py-6 rounded-2xl text-xl font-bold shadow-2xl hover:bg-brand-700 transition-all flex items-center justify-center gap-4 hover:-translate-y-1 active:scale-[0.98]"
-                                                >
-                                                    <i className="fa-solid fa-wand-magic-sparkles"></i>
-                                                    Start Virtual Try-On
-                                                </button>
-                                                <p className="text-center text-gray-400 text-xs mt-6">
-                                                    <i className="fa-solid fa-shield-halved mr-1"></i> Secure data processing & 24h photo deletion
-                                                </p>
+                                    <div className="w-full md:w-1/2 p-4 md:p-8 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 flex items-center justify-center">
+                                        <div className="aspect-[3/4] w-full max-w-sm rounded-3xl overflow-hidden shadow-[0_18px_50px_rgba(15,23,42,0.9)] bg-slate-900 border border-white/10 relative group/img">
+                                            <img
+                                                src={activeImage || selectedItem.image}
+                                                alt={selectedItem.title}
+                                                className="h-full w-full object-cover group-hover/img:scale-[1.03] transition-transform duration-500"
+                                            />
+                                            <div className="pointer-events-none absolute bottom-4 right-4 rounded-full bg-slate-950/80 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.2em] text-slate-200 border border-white/10">
+                                                DZTRYFITTING
                                             </div>
                                         </div>
                                     </div>
 
+                                    {/* Right: Selection Area */}
+                                    <div className="w-full md:w-1/2 p-8 md:p-8 flex flex-col justify-center bg-slate-950">
+                                        <div className="absolute top-4 mb-9/5 text-center md:text-left">
+                                            <div className="flex items-center justify-center md:justify-start gap-1 mb-1">
+                                                <img src={selectedItem.partnerLogo} alt={selectedItem.partnerName} className="w-4 h-4 rounded-full border border-white/10 shadow-sm" />
+                                                <span className="text-0.5xl font-semibold uppercase tracking-[0.25em] text-emerald-300/80">
+                                                    {selectedItem.partnerName}
+                                                </span>
+                                            </div>
+                                            <h2 className="text-0.25xl font-semibold text-slate-50 leading-tight mb-1">
+                                                {selectedItem.title}
+                                            </h2>
+                                            <div className="text-0.25xl text-emerald-400 font-bold mb-1">{selectedItem.price}</div>
+                                            <div className="absolute top-20 right-30  prose prose-sm text-slate-400 mb-1 leading-relaxed font-light">
+
+                                            </div>
+                                        </div>
+
+                                        {/* Sizes */}
+                                        <div className="mb-7">
+                                            <h4 className="text-[10px] font-semibold text-slate-400 uppercase tracking-[0.25em] mb-4">
+                                                Select Size
+                                            </h4>
+                                            <div className="flex flex-wrap gap-3">
+                                                {selectedItem.sizes.map(size => (
+                                                    <button
+                                                        key={size}
+                                                        onClick={() => setActiveSize(size)}
+                                                        className={`w-14 h-14 border rounded-2xl flex items-center justify-center text-sm font-semibold transition-all
+                                                            ${activeSize === size
+                                                                ? 'border-emerald-400/80 bg-emerald-500/15 text-emerald-200 shadow-[0_0_30px_rgba(34,197,94,0.45)] scale-105'
+                                                                : 'border-slate-600/60 text-slate-300 bg-slate-900/80 hover:border-emerald-400/60 hover:text-emerald-100 hover:bg-slate-900'}
+                                                        `}
+                                                    >
+                                                        {size}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* Colors */}
+                                        <div className="mb-9">
+                                            <h4 className="text-[10px] font-semibold text-slate-400 uppercase tracking-[0.25em] mb-4">
+                                                Available Colors
+                                            </h4>
+                                            <div className="flex flex-wrap gap-4">
+                                                {selectedItem.colors.map(color => (
+                                                    <button
+                                                        key={color}
+                                                        onClick={() => setActiveColor(color)}
+                                                        className={`w-11 h-11 rounded-2xl border shadow-sm transition-all relative
+                                                            ${activeColor === color
+                                                                ? 'border-white ring-4 ring-emerald-500/40 scale-110 shadow-[0_0_25px_rgba(34,197,94,0.55)]'
+                                                                : 'border-slate-800 hover:scale-110 hover:border-slate-300'}
+                                                        `}
+                                                        style={{ backgroundColor: color }}
+                                                        title={color}
+                                                    >
+                                                        {activeColor === color && (
+                                                            <div className="absolute inset-0 flex items-center justify-center">
+                                                                <div className="w-2 h-2 bg-white rounded-full shadow-sm" />
+                                                            </div>
+                                                        )}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* Final Action */}
+                                        <div className="mt-2">
+                                            <button
+                                                onClick={handleVirtualTryOnClick}
+                                                className="w-full bg-emerald-500 text-slate-950 py-4 rounded-2xl text-sm sm:text-base font-semibold shadow-[0_18px_50px_rgba(16,185,129,0.65)] hover:bg-emerald-400 transition-all flex items-center justify-center gap-3 hover:-translate-y-0.5 active:scale-[0.98]"
+                                            >
+                                                <i className="fa-solid fa-wand-magic-sparkles"></i>
+                                                <span>Start Virtual Try-On</span>
+                                            </button>
+                                            <p className="text-center text-gray-400 text-[10px] mt-6">
+                                                <i className="fa-solid fa-shield-halved mr-1"></i> Secure data processing & 24h photo deletion
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         )}
